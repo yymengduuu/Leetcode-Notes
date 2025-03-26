@@ -1,5 +1,6 @@
 📘 Binary Search
 
+
 ✅ Method 1: Closed Interval [left, right]
 function binarySearch(nums, target) {
   let left = 0, right = nums.length - 1;
