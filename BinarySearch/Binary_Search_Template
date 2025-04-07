@@ -37,13 +37,14 @@ function binarySearch(nums, target) {
   }
   return -1;
 }
-Key Points:
+
+
+💡Key Points:
 	•	Loop condition: left < right
 	•	Right is exclusive, so we don’t use nums.length - 1 like Method 1
 	•	Commonly used for finding insert positions or first occurrence
 
 📖Related Questions
-
 🔹Question 1: Leetcode_704
 Describtion: Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1. You must write an algorithm with O(log n) runtime complexity.
 ✅Method: Closed Interval [left, right]
