@@ -175,7 +175,7 @@ var searchRange = function(nums, target) {
     if(left === nums.length || nums[left] !== target) return result;
     result[0] = left;
     right = nums.length;
-    left = 1;
+    left = result[0];
 
     while (left < right) {
         const mid = Math.floor((left + right) / 2);
