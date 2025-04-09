@@ -1,7 +1,9 @@
 💡Key Points:
-	•	Loop condition: fast < nums.length
-	•	Fast++, slow pause when idetified target
-	•	Return slow is index of new array
+	•	Use two pointers: `fast` scans the array, `slow` marks the position to overwrite.
+	•	Loop condition: `fast < nums.length`
+	•	When `nums[fast] !== target`, assign `nums[slow] = nums[fast]` and move `slow++`
+	•       When `nums[fast] === target`, skip (do not move `slow`)
+	•	Final value of `slow` is the new length of the array
 
 📖Related Questions
 🔹Question 1: Leetcode_27
@@ -65,4 +67,24 @@ var backspaceCompare = function(s, t) {
         j--;
     }
     return true;
+};
+
+🔹Question 4: Leetcode_977
+Describtion: Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+✅Method:
+var sortedSquares = function(nums) {
+    let arr = new Array (nums.length);
+    let left = 0, right = arr.length - 1, pos = arr.length - 1; 
+    while (left <= right) {
+        const leftarr = nums[left] * nums[left];
+        const rightarr = nums[right] * nums[right];
+        if (leftarr > rightarr) {
+            arr[pos--] = leftarr;
+            left++;
+        } else {
+            arr[pos--] = rightarr;
+            right--;
+        }
+    }
+    return arr;
 };
