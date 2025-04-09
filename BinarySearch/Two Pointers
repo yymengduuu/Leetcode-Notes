@@ -1,1 +1,68 @@
+💡Key Points:
+	•	Loop condition: fast < nums.length
+	•	Fast++, slow pause when idetified target
+	•	Return slow is index of new array
 
+📖Related Questions
+🔹Question 1: Leetcode_27
+Describtion: Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+✅Method:
+var removeElement = function(nums, val) {
+    let slow = 0;
+    for (let fast = 0; fast < nums.length; fast++) {
+        if (nums[fast] !== val) {
+            nums[slow++] = nums[fast];
+        }
+    }
+    return slow;
+};
+
+🔹Question 2: Leetcode_283
+Describtion: Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+✅Method:
+var moveZeroes = function(nums) {
+    let slow = 0;
+    for (let fast = 0; fast < nums.length; fast++) {
+        if (nums[fast] !== 0) {
+            nums[slow++] = nums[fast];
+        }      
+    }
+    nums.fill(0,slow);
+    return nums;
+};
+
+🔹Question 3: Leetcode_844
+Describtion: Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+✅Method:
+var backspaceCompare = function(s, t) {
+    let i = s.length - 1, j = t.length - 1;
+    let skipS = 0, skipT = 0;
+    while (i >= 0 || j >= 0){
+        while (i >= 0){
+            if (s[i] === "#") {
+                i--;
+                skipS++;
+            } else if (skipS > 0) {
+                skipS--;
+                i--;
+            } else {
+                break;
+            }
+        }
+        while (j >= 0) {
+            if (t[j] === "#") {
+                j--;
+                skipT++;
+            } else if (skipT > 0) {
+                skipT--;
+                j--;
+            } else {
+                break;
+            }
+        }
+        if (s[i] !== t[j]) return false;
+        i--;
+        j--;
+    }
+    return true;
+};
