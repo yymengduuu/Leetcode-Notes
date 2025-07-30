@@ -1,5 +1,28 @@
 # Array
 
+## 有序数组的平方
+
+**Key Points:**
+
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_704
+
+---
+
+#### 🔹Question 1: Leetcode_704
+
+---
+
+#### 🔹Question 1: Leetcode_704
+
+---
+
+
+
+---
+
 ## Binary Search
 
 **Key Points:**
@@ -31,11 +54,12 @@ function binarySearch(nums, target) {
 
 ---
 
-Key Points:
+💡Key Points:
 - Loop condition: left <= right
 - On each iteration, we shrink the range by updating either left or right
 - Final result: if found, return index; if not, return -1
 
+---
 
 **Method 2: Left-closed, Right-open [left, right)**
 
@@ -56,12 +80,12 @@ function binarySearch(nums, target) {
 }
 ```
 
----
-
 💡Key Points:
 - Loop condition: left < right
 - Right is exclusive, so we don’t use nums.length - 1 like Method 1
 - Commonly used for finding insert positions or first occurrence
+
+---
 
 ### Related Questions
 
@@ -390,6 +414,7 @@ var backspaceCompare = function(s, t) {
 
 Describtion: Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
+#### Method: two pointers
 ```
 var sortedSquares = function(nums) {
     let arr = new Array (nums.length);
@@ -398,10 +423,12 @@ var sortedSquares = function(nums) {
         const leftarr = nums[left] * nums[left];
         const rightarr = nums[right] * nums[right];
         if (leftarr > rightarr) {
-            arr[pos--] = leftarr;
+            arr[pos] = leftarr;
+            pos--
             left++;
         } else {
-            arr[pos--] = rightarr;
+            arr[pos] = rightarr;
+            pos--
             right--;
         }
     }
@@ -409,6 +436,20 @@ var sortedSquares = function(nums) {
 };
 ```
 
+#### Method: brute-force
+
+```
+var sortedSquares = function(nums) {
+    let newNums = [];
+
+    for (let i = 0; i < nums.length; i++) {
+        newNums.push(nums[i]*nums[i]);
+    }
+
+    return newNums.sort((a,b) => a-b);
+    
+};
+```
 ---
 
 
