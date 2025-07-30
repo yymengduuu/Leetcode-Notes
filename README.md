@@ -1,120 +1,5 @@
 # Array
 
-## Two Pointers
-
-### Key Points:
-- Use two pointers: `fast` scans the array, `slow` marks the position to overwrite.
-- Loop condition: `fast < nums.length`
-- When `nums[fast] !== target`, assign `nums[slow] = nums[fast]` and move `slow++`
-- When `nums[fast] === target`, skip (do not move `slow`)
-- Final value of `slow` is the new length of the array
-
-### Related Questions
-
-#### 🔹Question 1: Leetcode_27
-
-Describtion: Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
-
-```
-var removeElement = function(nums, val) {
-    let slow = 0;
-    for (let fast = 0; fast < nums.length; fast++) {
-        if (nums[fast] !== val) {
-            nums[slow] = nums[fast];
-            slow ++;
-        }
-    }
-    return slow;
-};
-```
-
----
-
-#### 🔹Question 2: Leetcode_283
-
-Describtion: Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
-
-```
-var moveZeroes = function(nums) {
-    let slow = 0;
-    for (let fast = 0; fast < nums.length; fast++) {
-        if (nums[fast] !== 0) {
-            nums[slow++] = nums[fast];
-        }      
-    }
-    nums.fill(0,slow);
-    return nums;
-};
-```
-
----
-
-#### 🔹Question 3: Leetcode_844
-
-Describtion: Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
-
-```
-var backspaceCompare = function(s, t) {
-    let i = s.length - 1, j = t.length - 1;
-    let skipS = 0, skipT = 0;
-    while (i >= 0 || j >= 0){
-        while (i >= 0){
-            if (s[i] === "#") {
-                i--;
-                skipS++;
-            } else if (skipS > 0) {
-                skipS--;
-                i--;
-            } else {
-                break;
-            }
-        }
-        while (j >= 0) {
-            if (t[j] === "#") {
-                j--;
-                skipT++;
-            } else if (skipT > 0) {
-                skipT--;
-                j--;
-            } else {
-                break;
-            }
-        }
-        if (s[i] !== t[j]) return false;
-        i--;
-        j--;
-    }
-    return true;
-};
-```
-
----
-
-#### 🔹Question 4: Leetcode_977
-
-Describtion: Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
-
-```
-var sortedSquares = function(nums) {
-    let arr = new Array (nums.length);
-    let left = 0, right = arr.length - 1, pos = arr.length - 1; 
-    while (left <= right) {
-        const leftarr = nums[left] * nums[left];
-        const rightarr = nums[right] * nums[right];
-        if (leftarr > rightarr) {
-            arr[pos--] = leftarr;
-            left++;
-        } else {
-            arr[pos--] = rightarr;
-            right--;
-        }
-    }
-    return arr;
-};
-```
-
----
-
 ## Binary Search
 
 **Method 1: Closed Interval [left, right]**
@@ -402,4 +287,121 @@ var mySqrt = function(x) {
 };
 ```
 ---
+
+# Two Pointers
+
+**Key Points:**
+- Use two pointers: `fast` scans the array, `slow` marks the position to overwrite.
+- Loop condition: `fast < nums.length`
+- When `nums[fast] !== target`, assign `nums[slow] = nums[fast]` and move `slow++`
+- When `nums[fast] === target`, skip (do not move `slow`)
+- Final value of `slow` is the new length of the array
+
+## Related Questions
+
+### 🔹Question 1: Leetcode_27
+
+Describtion: Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+
+```
+var removeElement = function(nums, val) {
+    let slow = 0;
+    for (let fast = 0; fast < nums.length; fast++) {
+        if (nums[fast] !== val) {
+            nums[slow] = nums[fast];
+            slow ++;
+        }
+    }
+    return slow;
+};
+```
+
+---
+
+### 🔹Question 2: Leetcode_283
+
+Describtion: Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+```
+var moveZeroes = function(nums) {
+    let slow = 0;
+    for (let fast = 0; fast < nums.length; fast++) {
+        if (nums[fast] !== 0) {
+            nums[slow++] = nums[fast];
+        }      
+    }
+    nums.fill(0,slow);
+    return nums;
+};
+```
+
+---
+
+### 🔹Question 3: Leetcode_844
+
+Describtion: Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+
+```
+var backspaceCompare = function(s, t) {
+    let i = s.length - 1, j = t.length - 1;
+    let skipS = 0, skipT = 0;
+    while (i >= 0 || j >= 0){
+        while (i >= 0){
+            if (s[i] === "#") {
+                i--;
+                skipS++;
+            } else if (skipS > 0) {
+                skipS--;
+                i--;
+            } else {
+                break;
+            }
+        }
+        while (j >= 0) {
+            if (t[j] === "#") {
+                j--;
+                skipT++;
+            } else if (skipT > 0) {
+                skipT--;
+                j--;
+            } else {
+                break;
+            }
+        }
+        if (s[i] !== t[j]) return false;
+        i--;
+        j--;
+    }
+    return true;
+};
+```
+
+---
+
+### 🔹Question 4: Leetcode_977
+
+Describtion: Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+```
+var sortedSquares = function(nums) {
+    let arr = new Array (nums.length);
+    let left = 0, right = arr.length - 1, pos = arr.length - 1; 
+    while (left <= right) {
+        const leftarr = nums[left] * nums[left];
+        const rightarr = nums[right] * nums[right];
+        if (leftarr > rightarr) {
+            arr[pos--] = leftarr;
+            left++;
+        } else {
+            arr[pos--] = rightarr;
+            right--;
+        }
+    }
+    return arr;
+};
+```
+
+---
+
+
 
