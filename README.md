@@ -2,6 +2,14 @@
 
 ## Binary Search
 
+**Key Points:**
+- Use when the array (or value space) is sorted or monotonic(increasing or decreasing);
+- Maintain two pointers: left and right;
+- Loop condition: left <= right (or left < right for some variants);
+- Compute mid: mid = Math.floor((left + right) / 2);
+- Compare nums[mid] (or condition on mid) with target;
+- Useful for: Searching in sorted array /	Finding insert position /	Locating boundaries (first/last occurrence) /	Searching in answer space (e.g. min/max days, capacity, speed)
+
 **Method 1: Closed Interval [left, right]**
 
 ```
