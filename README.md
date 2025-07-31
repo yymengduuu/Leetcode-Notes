@@ -1,21 +1,26 @@
 # Array
 
-## 有序数组的平方
+## Sliding Window
 
 **Key Points:**
+
+- Use for: Subarray / finding maximum / minimal length;
+- Set an infinity ans to record maximum / minimal length;
+- External loop: right < nums.length
+- Internal loop: sum >= target, left++ || sum < target, right ++
 
 
 ### Related Questions
 
-#### 🔹Question 1: Leetcode_704
+#### 🔹Question 1: Leetcode_209
 
 ---
 
-#### 🔹Question 1: Leetcode_704
+#### 🔹Question 1: Leetcode_904
 
 ---
 
-#### 🔹Question 1: Leetcode_704
+#### 🔹Question 1: Leetcode_76
 
 ---
 
