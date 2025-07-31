@@ -14,13 +14,38 @@
 
 #### 🔹Question 1: Leetcode_209
 
+Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+
+```
+var minSubArrayLen = function(target, nums) {
+    let left = 0;
+    let right = 0;
+    let sum = 0;
+    let ans = Infinity;
+
+    while (right < nums.length ) {
+        sum = sum + nums[right];
+
+        while (sum >= target) {
+            ans = Math.min (ans, right - left + 1);
+            sum = sum - nums[left]
+            left ++;
+        }
+        right ++;
+    }
+
+    return ans === Infinity ? 0 : ans;
+    
+};
+```
+
 ---
 
-#### 🔹Question 1: Leetcode_904
+#### 🔹Question 2: Leetcode_904
 
 ---
 
-#### 🔹Question 1: Leetcode_76
+#### 🔹Question 3: Leetcode_76
 
 ---
 
