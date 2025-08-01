@@ -110,7 +110,7 @@ var findMaxAverage = function(nums, k) {
 
 ---
 
-#### 🔹Question 3: Leetcode_1052
+#### 🔹Question 4: Leetcode_1052
 
 There is a bookstore owner that has a store open for n minutes. You are given an integer array customers of length n where customers[i] is the number of the customers that enter the store at the start of the ith minute and all those customers leave after the end of that minute.
 
