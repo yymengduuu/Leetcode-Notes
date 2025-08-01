@@ -84,7 +84,29 @@ var totalFruit = function(fruits) {
 
 ---
 
-#### 🔹Question 3: Leetcode_76
+#### 🔹Question 3: Leetcode_643
+
+You are given an integer array nums consisting of n elements, and an integer k.
+
+Find a contiguous subarray whose length is equal to k that has the maximum average value and return this value. Any answer with a calculation error less than 10-5 will be accepted.
+
+```
+var findMaxAverage = function(nums, k) {
+    let left = 0;
+    let sum = 0;
+    let ans = -Infinity;
+
+    for(let right = 0; right < nums.length; right ++) {
+        sum += nums[right];
+        while (right - left + 1 >= k) {
+            ans = Math.max (ans, sum / k);
+            sum -= nums[left]
+            left ++;
+        }
+    }
+    return ans;
+};
+```
 
 ---
 
