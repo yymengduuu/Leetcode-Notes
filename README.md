@@ -1,5 +1,81 @@
 # Array
 
+## Spiral Matrix
+
+**Key Points:**
+
+- Use for: Subarray / finding maximum / minimal length;
+- Set an infinity ans to record maximum / minimal length;
+- External loop: right < nums.length
+- Internal loop: sum >= target, left++ || sum < target, right ++
+
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_59
+
+Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+
+```
+var generateMatrix = function(n) {
+    let startX = startY = 0;
+    let offset = 1;
+    let count = 1;
+    let loop = Math.floor(n/2);
+    let mid = Math.floor(n/2);
+    let ans = new Array(n).fill(0).map(() => new Array(n).fill(0) )
+
+    while(loop--){
+        let row = startX, col = startY;
+        for(; col < n - offset; col++){
+            ans[row][col] = count ++;
+        }
+        for(; row < n - offset; row++ ){
+            ans[row][col] = count ++;
+        }
+        for(; col > startY; col--){
+            ans[row][col] = count ++;
+        }
+        for(; row > startX; row--){
+            ans[row][col] = count ++;
+        }
+        startX ++;
+        startY ++;
+        offset += 1;
+    }
+    if (n % 2 === 1){
+        ans[mid][mid] = count ++;
+    }
+    return ans;
+};
+```
+
+---
+
+#### 🔹Question 2: Leetcode_59
+
+```
+
+```
+
+---
+
+#### 🔹Question 3: Leetcode_59
+
+```
+
+```
+
+---
+
+#### 🔹Question 4: Leetcode_59
+
+```
+
+```
+
+---
+
 ## Sliding Window
 
 **Key Points:**
