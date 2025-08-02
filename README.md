@@ -4,10 +4,16 @@
 
 **Key Points:**
 
-- Use for: Subarray / finding maximum / minimal length;
-- Set an infinity ans to record maximum / minimal length;
-- External loop: right < nums.length
-- Internal loop: sum >= target, left++ || sum < target, right ++
+- Use for: Matrix traversal or construction in spiral (clockwise) order;
+- Use 4 boundaries or startX/startY + offset to control traversal scope;
+- Outer loop: number of layers = Math.floor(n / 2) (i.e. loop);
+- Inner steps (always 4 in each loop):
+    1.	Left to Right → top row
+	2.	Top to Bottom ↓ right column
+	3.	Right to Left ← bottom row
+	4.	Bottom to Top ↑ left column;
+- After each outer loop: startX++, startY++, offset++ to move to inner layer;
+- For odd n, fill center value after loop: if (n % 2 === 1) res[mid][mid] = count;
 
 
 ### Related Questions
