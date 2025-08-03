@@ -58,10 +58,45 @@ var generateMatrix = function(n) {
 
 ---
 
-#### 🔹Question 2: Leetcode_59
+#### 🔹Question 2: Leetcode_54
+
+Given an m x n matrix, return all elements of the matrix in spiral order.
 
 ```
+var spiralOrder = function(matrix) {
+    let startX = 0;
+    let startY = 0;
+    let endX = m - 1;
+    let endY = n - 1;
+    let m = matrix.length;
+    let n = matrix[0].length;
+    let ans = [];
 
+    while (startX <= endX && startY <= endY){
+        for (let col = startY; col <= endY; col ++) {
+            ans.push(matrix[startX][col]);
+        }
+        for (let row = startX + 1; row <= endX; row ++) {
+            ans.push(matrix[row][endY]);
+        }
+        if (startX < endX) {
+            for (let col = endY - 1; col >= startY; col--) {
+                ans.push(matrix[endX][col]);
+            }
+        }
+        if (startY < endY) {
+            for (let row = endX - 1; row > startX; row--) {
+                ans.push(matrix[row][startY]);
+            }
+        }
+        startX ++;
+        startY ++;
+        endX --;
+        endY --;
+    }
+    
+    return ans;
+};
 ```
 
 ---
