@@ -101,10 +101,38 @@ var spiralOrder = function(matrix) {
 
 ---
 
-#### 🔹Question 3: Leetcode_59
+#### 🔹Question 3: Leetcode_885
+
+You start at the cell (rStart, cStart) of an rows x cols grid facing east. The northwest corner is at the first row and column in the grid, and the southeast corner is at the last row and column.
+
+You will walk in a clockwise spiral shape to visit every position in this grid. Whenever you move outside the grid's boundary, we continue our walk outside the grid (but may return to the grid boundary later.). Eventually, we reach all rows * cols spaces of the grid.
+
+Return an array of coordinates representing the positions of the grid in the order you visited them.
 
 ```
+var spiralMatrixIII = function(rows, cols, rStart, cStart) {
+    let direction = [[0,1],[1,0],[0,-1],[-1,0]];
+    let ans = [[rStart,cStart]];
+    let x = rStart, y = cStart;
+    let step = 1;
+    let currentD = 0;
 
+    while(ans.length < rows * cols) {
+        for (let i = 0; i < 2; i ++ ){
+            const [dx,dy] = direction[currentD % 4];
+            for (let j = 0; j < step; j ++){
+                x += dx;
+                y += dy;
+                if (x >= 0 && x < rows && y >=0 && y < cols){
+                    ans.push([x,y]);
+                }
+            }
+            currentD ++;
+        }
+        step ++; 
+    }
+    return ans;
+};
 ```
 
 ---
