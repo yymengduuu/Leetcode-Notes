@@ -53,8 +53,45 @@ var removeElements = function(head, val) {
 
 #### 🔹Question 2: Leetcode_83
 
+Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+Example 1:
+Input: head = [1,1,2]
+Output: [1,2]
+
+##### ✅Method 1: Insert dummy head
+
+```
+var deleteDuplicates = function(head) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let curr = dummy;
+
+    while (curr.next !== null && curr.next.next !== null) {
+        if (curr.next.val === curr.next.next.val) {
+            curr.next = curr.next.next;
+        } else {
+            curr = curr.next
+        }
+    }
+    return dummy.next;
+};
 ```
 
+##### ✅Method 2: Without dummy head
+
+```
+var deleteDuplicates = function(head) {
+    let curr = head;
+
+    while (curr !== null && curr.next !== null) {
+        if (curr.val === curr.next.val) {
+            curr.next = curr.next.next;
+        } else {
+            curr = curr.next
+        }
+    }
+    return head;
+};
 ```
 
 ---
