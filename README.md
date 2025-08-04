@@ -96,7 +96,11 @@ var deleteDuplicates = function(head) {
 
 ---
 
-#### 🔹Question 3: Leetcode_237
+## Design Linked List
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_707
 
 ```
 
