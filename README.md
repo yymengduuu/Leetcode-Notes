@@ -15,16 +15,16 @@ function ListNode(val, next = null) {
 }
 ```
 
+---
+
+## Remove elements
+
 **Key Points**
 - Insert a dummy head in most cases, especially when you might need to delete the head node. Skip it only if you’re just iterating without modifying the list；
 - To avoid null pointer errors, always check curr.next !== null in the while condition.
 (Null pointer error: Cannot read properties of null (reading 'val'));
 - If curr.next.val === target, then delete the node by assigning curr.next = curr.next.next. Otherwise, move forward by setting curr = curr.next.;
 - Always return dummy.next instead of head, because the original head node might have been removed.
-
----
-
-## Remove elements
 
 ### Related Questions
 
@@ -99,6 +99,9 @@ var deleteDuplicates = function(head) {
 ## Design Linked List
 
 ### Related Questions
+
+**Key Points**
+
 
 #### 🔹Question 1: Leetcode_707
 
