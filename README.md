@@ -1,3 +1,72 @@
+# Linked List
+
+链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。链表的入口节点称为链表的头结点也就是head。
+
+```
+let dummy = new ListNode(0);
+```
+
+ListNode 是链表节点类，通常定义为：
+
+```
+function ListNode(val, next = null) {
+    this.val = val;
+    this.next = next;
+}
+```
+
+**Key Points**
+- Insert a dummy head in most cases, especially when you might need to delete the head node. Skip it only if you’re just iterating without modifying the list；
+- To avoid null pointer errors, always check curr.next !== null in the while condition.
+(Null pointer error: Cannot read properties of null (reading 'val'));
+- If curr.next.val === target, then delete the node by assigning curr.next = curr.next.next. Otherwise, move forward by setting curr = curr.next.;
+- Always return dummy.next instead of head, because the original head node might have been removed.
+
+---
+
+## Remove elements
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_203
+
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+
+```
+var removeElements = function(head, val) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let current = dummy;
+
+    while (current !== null && current.next !== null) {
+        if (current.next.val === val) {
+            current.next = current.next.next;
+        } else {
+            current = current.next;
+        }
+    }
+    return dummy.next;
+};
+```
+
+---
+
+#### 🔹Question 2: Leetcode_83
+
+```
+
+```
+
+---
+
+#### 🔹Question 3: Leetcode_237
+
+```
+
+```
+
+---
+
 # Array
 
 ## Spiral Matrix
@@ -133,14 +202,6 @@ var spiralMatrixIII = function(rows, cols, rStart, cStart) {
     }
     return ans;
 };
-```
-
----
-
-#### 🔹Question 4: Leetcode_59
-
-```
-
 ```
 
 ---
