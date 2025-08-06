@@ -101,6 +101,11 @@ var deleteDuplicates = function(head) {
 ### Related Questions
 
 **Key Points**
+- 获取第n个节点的值： n<=size-1 --> n !== null --> n-- --> return curr.val;
+- 头部插入节点： new node --> newNode.next = dummy head.next --> dummy head.next = newNode --> size++;
+- 尾部插入节点： new node -> curr=dummyhead --> while(curr.next != null) --> curr = curr.next --> currr.next = newNode;
+- 第n个节点前插入节点： curr=dummyhead --> while(n--) --> curr = curr.next --> newNode.next = curr.next --> curr.next = newNode;
+- 删除第n个节点： curr=dummyhead --> while(n--) --> curr = curr.next --> curr.next = curr.next.next --> 
 
 
 #### 🔹Question 1: Leetcode_707
