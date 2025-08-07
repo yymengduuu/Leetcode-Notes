@@ -281,6 +281,32 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
 
 ---
 
+## Reverse Linked List
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_206
+
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+```
+var reverseList = function(head) {
+    let cur = head;
+    let pre = null;
+    let tem = null;
+
+    while(cur){
+        tem = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = tem;
+    }
+
+    return pre;
+    
+};
+```
+
 # Array
 
 ## Spiral Matrix
