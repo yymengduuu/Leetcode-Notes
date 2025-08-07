@@ -273,24 +273,17 @@ Given an array of positive integers nums and a positive integer target, return t
 
 ```
 var minSubArrayLen = function(target, nums) {
-    let left = 0;
-    let right = 0;
-    let sum = 0;
+    let left = 0, sum = 0;
     let ans = Infinity;
-
-    while (right < nums.length ) {
-        sum = sum + nums[right];
-
-        while (sum >= target) {
-            ans = Math.min (ans, right - left + 1);
-            sum = sum - nums[left]
-            left ++;
-        }
-        right ++;
+    for(let right = 0; right < nums.length; right++){
+        sum += nums[right];
+            while (sum >= target){
+                ans = Math.min(ans, right - left + 1);
+                sum -= nums[left]
+                left++;
+            } 
     }
-
     return ans === Infinity ? 0 : ans;
-    
 };
 ```
 
@@ -434,7 +427,7 @@ function binarySearch(nums, target) {
     if (nums[mid] > target) {
       right = mid - 1;
     } else if (nums[mid] < target) {
-      left = mid + 1;
+      left = mid;
     } else {
       return mid;
     }
