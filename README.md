@@ -1,3 +1,5 @@
+代码随想录算法训练营第三天
+
 # Linked List
 
 链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。链表的入口节点称为链表的头结点也就是head。
@@ -163,6 +165,118 @@ void deleteAtIndex(int index) Delete the indexth node in the linked list, if the
 
 ```
 
+var MyLinkedList = function() {
+    this._size = 0;
+    this._head = null;
+    this._tail = null;
+};
+
+/** 
+ * @param {number} index
+ * @return {number}
+ */
+MyLinkedList.prototype.get = function(index) {
+    if(index < 0 || index >= this._size) return -1;
+
+    let cur = this._head;
+
+    while (index-- > 0) {
+        cur = cur.next;
+    }
+    return cur.val;
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtHead = function(val) {
+    const newNode = new ListNode(val);
+    newNode.next = this._head;
+    this._head = newNode;
+    if (this._size ===0) this._tail = newNode;
+    this._size++;
+};
+
+/** 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtTail = function(val) {
+    const newNode = new ListNode(val);
+
+    if(this._size === 0) {
+        this._head = newNode;
+        this._tail = newNode;
+        } else {
+            this._tail.next = newNode;
+            this._tail = newNode;
+        }
+    this._size ++;
+};
+
+/** 
+ * @param {number} index 
+ * @param {number} val
+ * @return {void}
+ */
+MyLinkedList.prototype.addAtIndex = function(index, val) {
+    if (index > this._size) return;
+        
+    if (index <= 0) return this.addAtHead(val);
+            
+    if (index === this._size) return this.addAtTail(val);
+            
+    let newNode = new ListNode(val);
+    let dummy = new ListNode(0);
+    dummy.next = this._head;
+    let cur = dummy;
+    for(let i = 0; i < index; i++){
+        cur = cur.next;
+        }
+    newNode.next = cur.next;
+    cur.next = newNode;
+    this._head = dummy.next;
+    this._size++;       
+};
+
+/** 
+ * @param {number} index
+ * @return {void}
+ */
+MyLinkedList.prototype.deleteAtIndex = function(index) {
+    if(index < 0 || index >= this._size) return;
+
+    let dummy = new ListNode(0);
+    dummy.next = this._head;
+    let cur = dummy;
+
+    for(let i = 0; i < index; i++){
+        cur = cur.next;
+    }
+    if (cur.next !== null){
+        cur.next = cur.next.next;
+        }
+    this._head = dummy.next;
+    this._size--;
+    if (index === this._size) {
+        let temp = this._head;
+        while (temp && temp.next !== null) {
+            temp = temp.next;
+        }
+        this._tail = temp;
+    }
+};
+
+/** 
+ * Your MyLinkedList object will be instantiated and called as such:
+ * var obj = new MyLinkedList()
+ * var param_1 = obj.get(index)
+ * obj.addAtHead(val)
+ * obj.addAtTail(val)
+ * obj.addAtIndex(index,val)
+ * obj.deleteAtIndex(index)
+ */
 ```
 
 ---
