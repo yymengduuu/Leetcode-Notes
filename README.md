@@ -289,6 +289,8 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
 
 Given the head of a singly linked list, reverse the list, and return the reversed list.
 
+#### Method1: 双指针法（cur&pre)，第三个指针tem只是用来保存cur.next，后续会消失
+
 ```
 var reverseList = function(head) {
     let cur = head;
@@ -306,6 +308,23 @@ var reverseList = function(head) {
     
 };
 ```
+
+#### Method2: 递归法（双指针法的衍生）
+
+```
+var reverse = function(cur, pre) {
+    if (cur === null) return pre;
+    let tem = cur.next;
+    cur.next = pre; //只需要完成双指针法的前两步操作，其余会通过reverse本身完成
+    return reverse(tem, cur);
+}
+
+var reverseList = function(head) {
+    return reverse(head, null);
+};
+```
+
+---
 
 # Array
 
