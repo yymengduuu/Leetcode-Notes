@@ -96,19 +96,70 @@ var deleteDuplicates = function(head) {
 
 ---
 
-## Design Linked List
+## 链表的增删查改
+
+**Key Points**
+- **合法性判断**（index 是否越界）
+ ```
+if (index < 0 || index > this._size) return; // 插入
+if (index < 0 || index >= this._size) return -1; // 查找 / 删除
+```
+- **创建 dummy 节点**，用 dummy避免处理第一个节点的特殊情况
+```
+let dummy = new ListNode(0); //这里控制的是value，dummy = { val: 0, next: null }
+dummy.next = this._head; // 这里才是位置
+```
+- **遍历至目标 index 前一个节点（cur）**
+```
+let cur = dummy;
+for (let i = 0; i < index; i++) {
+    cur = cur.next;
+}
+```
+- **基于 cur 执行插入/删除/修改操作**
+插入
+```
+let newNode = new ListNode(val); 
+newNode.next = cur.next; 
+cur.next = newNode;
+```
+删除
+```
+cur.next = cur.next.next;
+```
+修改
+```
+cur.next.val = val;
+```
+- **如果操作影响了链表头，更新 this._head = dummy.next**
+```
+this._head = dummy.next;
+```
+- **根据操作更新链表长度 this._size**
+```
+this._size++;
+```
+或
+```
+this._size--;
+```
 
 ### Related Questions
 
-**Key Points**
-- 获取第n个节点的值： n<=size-1 --> n !== null --> n-- --> return curr.val;
-- 头部插入节点： new node --> newNode.next = dummy head.next --> dummy head.next = newNode --> size++;
-- 尾部插入节点： new node -> curr=dummyhead --> while(curr.next != null) --> curr = curr.next --> currr.next = newNode;
-- 第n个节点前插入节点： curr=dummyhead --> while(n--) --> curr = curr.next --> newNode.next = curr.next --> curr.next = newNode;
-- 删除第n个节点： curr=dummyhead --> while(n--) --> curr = curr.next --> curr.next = curr.next.next --> 
-
-
 #### 🔹Question 1: Leetcode_707
+
+Design your implementation of the linked list. You can choose to use a singly or doubly linked list.
+A node in a singly linked list should have two attributes: val and next. val is the value of the current node, and next is a pointer/reference to the next node.
+If you want to use the doubly linked list, you will need one more attribute prev to indicate the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.
+
+Implement the MyLinkedList class:
+
+MyLinkedList() Initializes the MyLinkedList object.
+int get(int index) Get the value of the indexth node in the linked list. If the index is invalid, return -1.
+void addAtHead(int val) Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+void addAtTail(int val) Append a node of value val as the last element of the linked list.
+void addAtIndex(int index, int val) Add a node of value val before the indexth node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.
+void deleteAtIndex(int index) Delete the indexth node in the linked list, if the index is valid.
 
 ```
 
