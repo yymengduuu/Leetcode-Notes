@@ -115,7 +115,7 @@ dummy.next = this._head; // 这里才是位置
 ```
 let cur = dummy;
 for (let i = 0; i < index; i++) {
-    cur = cur.next;
+    cur = cur.next; // cur一直移动，直到 index 的前一个节点停下，此时cur在目标target前一个index
 }
 ```
 - **基于 cur 执行插入/删除/修改操作**
