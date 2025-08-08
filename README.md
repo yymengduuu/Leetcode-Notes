@@ -317,11 +317,11 @@ var reverseList = function(head) {
 #### Method2: 递归法（双指针法的衍生）
 
 ```
-var reverse = function(cur, pre) {
+var reverse = function(cur, pre) { //对应下面的var reverseList = function(head, null)
     if (cur === null) return pre;
     let tem = cur.next;
     cur.next = pre; //只需要完成双指针法的前两步操作，其余会通过reverse本身完成
-    return reverse(tem, cur);
+    return reverse(tem, cur); // 因为cur = temp; pre = cur; 对应上面的function(cur, pre)
 }
 
 var reverseList = function(head) {
