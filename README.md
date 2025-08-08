@@ -134,9 +134,22 @@ cur.next = cur.next.next;
 cur.next.val = val;
 ```
 - **如果操作影响了链表头，更新 this._head = dummy.next**
+
+链表
+```
+dummy --> [0] --> [1] --> [99] --> [2] --> [3] --> null
+```
+
+更新真实头部
 ```
 this._head = dummy.next;
 ```
+
+更新后链表
+```
+this._head --> [1] --> [99] --> [2] --> [3] --> null
+```
+
 - **根据操作更新链表长度 this._size**
 ```
 this._size++;
