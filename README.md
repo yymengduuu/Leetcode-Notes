@@ -304,17 +304,13 @@ Given the head of a singly linked list, reverse the list, and return the reverse
 var reverseList = function(head) {
     let cur = head;
     let pre = null;
-    let tem = null;
-
     while(cur){
-        tem = cur.next;
+        let temp = cur.next;
         cur.next = pre;
-        pre = cur;
-        cur = tem;
+        pre = cur; //必须是pre先定义，因为如果先定义cur，pre就找不到对应的cur了
+        cur = temp;
     }
-
     return pre;
-    
 };
 ```
 
