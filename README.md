@@ -30,22 +30,21 @@ function ListNode(val, next = null) {
 
 ### Related Questions
 
-#### 🔹Question 1: Leetcode_203
+#### 🔹Question 1: Leetcode_24
 
-Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
 
 ```
-var removeElements = function(head, val) {
+var swapPairs = function(head) {
     let dummy = new ListNode(0);
     dummy.next = head;
-    let current = dummy;
-
-    while (current.next !== null) {
-        if (current.next.val === val) {
-            current.next = current.next.next;
-        } else {
-            current = current.next;
-        }
+    let tem = dummy;
+    while(tem.next && tem.next.next){
+        let cur = tem.next.next, pre = tem.next;
+        pre.next = cur.next;
+        cur.next = pre;
+        tem.next = cur;
+        tem = pre;
     }
     return dummy.next;
 };
