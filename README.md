@@ -22,6 +22,40 @@ function ListNode(val, next = null) {
 ## Swap Nodes in Linked List
 
 **Key Points**
+![IMG_0517](https://github.com/user-attachments/assets/d3fd738a-ddce-4b2a-b911-36d94b9aec1e)
+
+- 快慢指针定位正数情况下n的位置；
+- 快指针先走 n 步；
+- 快慢指针一起走，直到 fast.next === null（slow 在目标前一个位置).
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_19
+
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+```
+var removeNthFromEnd = function(head, n) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let fast = dummy, slow = dummy;
+    while (n--) {
+        fast = fast.next;
+    }
+    while (fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    slow.next = slow.next.next;
+    return dummy.next;
+};
+```
+
+---
+
+## Swap Nodes in Linked List
+
+**Key Points**
 ![IMG_0516](https://github.com/user-attachments/assets/93c44e76-c273-4737-9d52-6cb3b45e9cd4)
 
 - Condition：temp && temp.next;
