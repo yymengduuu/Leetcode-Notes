@@ -1,4 +1,4 @@
-代码随想录算法训练营第三天
+代码随想录算法训练营第四天
 
 # Linked List
 
@@ -18,6 +18,43 @@ function ListNode(val, next = null) {
 ```
 
 ---
+
+## Swap Nodes in Linked List
+
+**Key Points**
+- Insert a dummy head in most cases, especially when you might need to delete the head node. Skip it only if you’re just iterating without modifying the list；
+- To avoid null pointer errors, always check curr.next !== null in the while condition.
+(Null pointer error: Cannot read properties of null (reading 'val'));
+- If curr.next.val === target, then delete the node by assigning curr.next = curr.next.next. Otherwise, move forward by setting curr = curr.next.;
+- Always return dummy.next instead of head, because the original head node might have been removed.
+
+### Related Questions
+![IMG_0516](https://github.com/user-attachments/assets/93c44e76-c273-4737-9d52-6cb3b45e9cd4)
+
+
+#### 🔹Question 1: Leetcode_203
+
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+
+```
+var removeElements = function(head, val) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let current = dummy;
+
+    while (current.next !== null) {
+        if (current.next.val === val) {
+            current.next = current.next.next;
+        } else {
+            current = current.next;
+        }
+    }
+    return dummy.next;
+};
+```
+
+---
+
 
 ## Remove elements
 
