@@ -19,6 +19,71 @@ function ListNode(val, next = null) {
 
 ---
 
+## Intersection of Two Linked Lists
+
+**Key Points**
+
+- 求出两个链表的长度，设定A为最长的链表，并求出两个链表长度的差值;
+- 让curA移动到，和curB 末尾对齐的位置:
+A: 1 -> 2 -> 5 -> 6 -> 7 -> 8
+            curA
+B: 4 -> 6 -> 7 -> 8
+  curB
+- 同时向后移动curA和curB，如果curA !== curB，则继续向后历遍，如果相等则返回最长链表A:
+A: 1 -> 2 -> 5 -> 6 -> 7 -> 8
+                 curA
+B: 4 -> 6 -> 7 -> 8
+       curB
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_19
+
+Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
+e.g.
+Input:
+A: 1 -> 2 -> 5 -> 6 -> 7 -> 8
+B: 4 -> 6 -> 7 -> 8
+
+Output:
+A: 1 -> 2 -> 5
+                -> 6 -> 7 -> 8
+B: 4
+
+```
+var getIntersectionNode = function(headA, headB) {
+    let lenA = 0, lenB = 0;
+    let temA = headA, temB = headB;
+    while (temA) {
+        lenA++;
+        temA = temA.next;
+    };
+    while (temB) {
+        lenB++;
+        temB = temB.next;
+    };
+
+    let curA = headA, curB = headB;
+    if (lenA < lenB) {
+        [curA, curB] = [curB, curA];
+        [lenA, lenB] = [lenB, lenA]; // 解构赋值交换: [a, b] = [b, a]直接交换 a 和 b
+    }
+    let gap = lenA - lenB;
+    while (gap-- > 0) {
+        curA = curA.next;
+    }
+    while (curA && curA !== curB) {
+        curA = curA.next;
+        curB = curB.next;
+    }
+    return curA;
+};
+```
+
+---
+
+
+
 ## Swap Nodes in Linked List
 
 **Key Points**
