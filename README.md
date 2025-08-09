@@ -22,15 +22,13 @@ function ListNode(val, next = null) {
 ## Swap Nodes in Linked List
 
 **Key Points**
-- Insert a dummy head in most cases, especially when you might need to delete the head node. Skip it only if you’re just iterating without modifying the list；
-- To avoid null pointer errors, always check curr.next !== null in the while condition.
-(Null pointer error: Cannot read properties of null (reading 'val'));
-- If curr.next.val === target, then delete the node by assigning curr.next = curr.next.next. Otherwise, move forward by setting curr = curr.next.;
-- Always return dummy.next instead of head, because the original head node might have been removed.
-
-### Related Questions
 ![IMG_0516](https://github.com/user-attachments/assets/93c44e76-c273-4737-9d52-6cb3b45e9cd4)
 
+- Condition：temp && temp.next;
+- Three key points to save positions: tem -> pre -> cur;
+- Swapping: break → link tail → link head.
+
+### Related Questions
 
 #### 🔹Question 1: Leetcode_203
 
