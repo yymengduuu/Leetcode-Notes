@@ -19,6 +19,48 @@ function ListNode(val, next = null) {
 
 ---
 
+## Linked Lists Cycle
+
+**Key Points**
+
+- 先判断链表是否有环：fast 走两个节点，slow走一个节点，有环的话一定会在环内相遇：
+  	•	slow 每次走 1 步（慢跑的人）
+	•	fast 每次走 2 步（快跑的人）
+如果没有环他们一定不会相遇，快的人会先到达终点；
+- 找到这个环的入口：从相遇点走 c 步就是环入口，而从链表头走 a 步也是环入口，因此让slow回到head，fast留在相遇点，同时历遍slow，fast，就能找到环入口。
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_142
+
+Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.
+
+Do not modify the linked list.
+
+```
+var detectCycle = function(head) {
+    if(!head || !head.next) return null;
+
+    let fast = head.next.next, slow = head.next;
+    while (fast && fast.next && fast !== slow) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    if(!fast || !fast.next) return null;
+
+    slow = head;
+    while(fast !== slow){
+        fast = fast.next;
+        slow = slow.next;
+    }
+    return slow;
+};
+```
+
+---
+
 ## Intersection of Two Linked Lists
 
 **Key Points**
