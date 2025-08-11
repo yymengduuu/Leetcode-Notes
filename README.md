@@ -4,7 +4,7 @@
 
 **Key Points**
 
-- 当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法;
+- 当我们需要查询一个元素是否出现过，或者一个元素是否在集合里的时候，就要考虑哈希法;
 - 哈希问题考虑三种方式：Array/ Set/ Map
 - Array（固定长度）: new Array(length).fill(0);
 - Set（数据结构类似于数组，但不允许重复值）：new Set();
@@ -12,24 +12,80 @@
 - Array → Set：let set = new Set(arr);
 - Set → Array： let arr = [...set] ｜｜let arr = Array.from(set);
 
-## Hash question: Set
+## Hash question: map
 
 **Key Points**
 
-- 只需 判断是否存在 / 去重，不需要统计次数;
+- 数据范围未知,需要统计次数,需要索引;
 - 不能直接存次数  - 无法通过索引访问;
-- LeetCode 常见例子: 两数之和（简化版）、判断有无重复元素、滑动窗口去重;
+- LeetCode 常见例子: 两数之和（经典版）、单词频率统计、LRU 缓存;
+
+---
+
+**Map 常用方法**
+
+| 方法 | 作用 | 示例 |
+|------|------|------|
+| `set(key, value)` | 添加或更新键值 | `map.set("a", 1)` |
+| `get(key)` | 获取键对应的值，没有返回 `undefined` | `map.get("a") // 1` |
+| `has(key)` | 判断是否存在键 | `map.has("a") // true` |
+| `delete(key)` | 删除某个键值对，返回 `true/false` | `map.delete("a")` |
+| `clear()` | 清空所有键值对 | `map.clear()` |
+| `size` | 返回键值对数量（属性，不是方法） | `map.size // 2` |
 
 ### Related Questions
 
 #### 🔹Question 1: Leetcode_349
 
-Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
-Constraints:
-1 <= nums1.length, nums2.length <= 1000
-0 <= nums1[i], nums2[i] <= 1000
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+You can return the answer in any order.
 
-#### Method1: Array(1 <= nums1.length, nums2.length <= 1000)
+```
+var twoSum = function(nums, target) {
+    let hash = {};
+    for (let i = 0; i < nums.length; i++) {
+        if (hash[target - nums[i]] !== undefined) {
+            return [i, hash[target - nums[i]]];
+        }
+        hash[nums[i]] = i;
+    }
+    return [];
+};
+```
+
+```
+var twoSum = function(nums, target) {
+    let hash = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        if (hash.has(target - nums[i])) {
+            return [i, hash.get(target - nums[i])];
+        }
+        hash.set(nums[i], i);
+    }
+    return [];
+};
+```
+
+---
+
+## Hash question: Set
+
+**Key Points**
+
+- 只需 判断是否存在 / 去重，不需要统计次数;
+- 适合频率统计、映射关系;
+- 想清楚map中的key和value用来存什么的；
+- LeetCode 常见例子: 两数之和（简化版）、判断有无重复元素、滑动窗口去重;
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_1
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+You can return the answer in any order.
+
 ```
 var intersection = function(nums1, nums2) {
     let ans = new Array(1001).fill(0);
