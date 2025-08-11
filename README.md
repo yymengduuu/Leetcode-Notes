@@ -1,4 +1,69 @@
-代码随想录算法训练营第四天
+代码随想录算法训练营第五天
+
+# Hash Table
+
+**Key Points**
+
+- 当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法;
+- 哈希问题考虑三种方式：Array/ Set/ Map
+- Array（固定长度）: new Array(length).fill(0);
+- Set（数据结构类似于数组，但不允许重复值）：new Set();
+- Map（键值对）：new Map();
+
+## Hash question: Set
+
+**Key Points**
+
+- 只需 判断是否存在 / 去重，不需要统计次数;
+- 不能直接存次数  - 无法通过索引访问;
+- LeetCode 常见例子: 两数之和（简化版）、判断有无重复元素、滑动窗口去重;
+
+### Related Questions
+
+
+#### 🔹Question 1: Leetcode_349
+
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+
+```
+
+```
+
+---
+
+## Hash question: Array
+
+**Key Points**
+
+- 数据范围已知且小（比如 26 个小写字母、数字 0-9);
+- 只能用整数索引;
+- LeetCode 常见例子: 字母异位词、计数排序、统计字符频率;
+
+### Related Questions
+
+
+#### 🔹Question 1: Leetcode_242
+
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+```
+var isAnagram = function(s, t) {
+    if(s.length !== t.length) return false;
+    let base = 'a'.charCodeAt();
+    let res = new Array(26).fill(0);
+    for(let i of s){
+        res[i.charCodeAt() - base]++;
+    }
+    for(let i of t){
+        if(!res[i.charCodeAt() - base]) return false;
+        res[i.charCodeAt() - base]--;
+    }
+    return true;
+};
+```
+
+
+---
 
 # Linked List
 
@@ -16,6 +81,14 @@ function ListNode(val, next = null) {
     this.next = next;
 }
 ```
+
+---
+
+## Interaction of Arrays
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_349
 
 ---
 
