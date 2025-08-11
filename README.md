@@ -1,4 +1,4 @@
-代码随想录算法训练营第五天
+代码随想录算法训练营第六天
 
 # Hash Table
 
@@ -21,7 +21,6 @@
 - LeetCode 常见例子: 两数之和（简化版）、判断有无重复元素、滑动窗口去重;
 
 ### Related Questions
-
 
 #### 🔹Question 1: Leetcode_349
 
@@ -63,6 +62,34 @@ var intersection = function(nums1, nums2) {
         }
     }
     return Array.from(ansSet);
+};
+```
+
+#### 🔹Question 1: Leetcode_202
+
+Write an algorithm to determine if a number n is happy.
+
+A happy number is a number defined by the following process:
+
+Starting with any positive integer, replace the number by the sum of the squares of its digits.
+Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy.
+Return true if n is a happy number, and false if not.
+
+```
+var isHappy = function(n) {
+    let set = new Set();
+    let sum;
+    
+    while(sum !== 1){
+        let arr = (String(sum || n)).split('');
+        sum = arr.reduce((total, num) => {
+            return total + num * num;
+        }, 0)
+        if (set.has(sum)) return false;
+        set.add(sum);
+    }
+    return true;
 };
 ```
 
