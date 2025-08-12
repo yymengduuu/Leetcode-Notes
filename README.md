@@ -97,7 +97,7 @@ var fourSumCount = function(nums1, nums2, nums3, nums4) {
 };
 ```
 
-#### 🔹Question 2: Leetcode_383
+#### 🔹Question 3: Leetcode_383
 
 Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
 Each letter in magazine can only be used once in ransomNote.
@@ -139,6 +139,46 @@ var canConstruct = function(ransomNote, magazine) {
     }
     return true;
 };
+```
+
+#### 🔹Question 4: Leetcode_15
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+Notice that the solution set must not contain duplicate triplets.
+
+```
+var threeSum = function(nums) {
+   let ans = [];
+   nums.sort((a,b) => a - b);
+   for (let i = 0; i< nums.length; i++) {
+    let left = i + 1, right = nums.length - 1;
+    if (nums[i] > 0) return ans;
+    if (nums[i] === nums[i - 1]) continue;
+    while (left < right) {
+        let sum = nums[i] + nums[left] + nums[right];
+        if (sum < 0) {
+            left++;
+        } else if (sum > 0) {
+            right--;
+        } else {
+            ans.push([nums[i], nums[left], nums[right]]);
+            while (left < right && nums[left] === nums[left + 1]) {
+                left++;
+            }
+            while (left < right && nums[right] === nums[right - 1]) {
+                right--;
+            }
+            left++;
+            right--;
+        }
+    }
+   }
+   return ans;
+};
+
+// a去重：nums[i] == nums [i - 1] continue
+// left去重：l<r && l == l+1 l++
+// right去重：l<r && r == r-1 r--
 ```
 
 ---
