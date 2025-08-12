@@ -153,7 +153,7 @@ var threeSum = function(nums) {
    for (let i = 0; i< nums.length; i++) {
     let left = i + 1, right = nums.length - 1;
     if (nums[i] > 0) return ans;
-    if (nums[i] === nums[i - 1]) continue;
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
     while (left < right) {
         let sum = nums[i] + nums[left] + nums[right];
         if (sum < 0) {
@@ -179,6 +179,12 @@ var threeSum = function(nums) {
 // a去重：nums[i] == nums [i - 1] continue
 // left去重：l<r && l == l+1 l++
 // right去重：l<r && r == r-1 r--
+```
+
+#### 🔹Question 4: Leetcode_18
+
+```
+
 ```
 
 ---
