@@ -1,4 +1,4 @@
-代码随想录算法训练营第六天
+代码随想录算法训练营第七天
 
 # Hash Table
 
@@ -17,7 +17,7 @@
 **Key Points**
 
 - 数据范围未知,需要统计次数,需要索引;
-- 不能直接存次数  - 无法通过索引访问;
+- 要判断什么是key什么是value；
 - LeetCode 常见例子: 两数之和（经典版）、单词频率统计、LRU 缓存;
 
 ---
@@ -64,6 +64,33 @@ var twoSum = function(nums, target) {
         hash.set(nums[i], i);
     }
     return [];
+};
+```
+
+#### 🔹Question 2: Leetcode_454
+
+Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that:
+
+0 <= i, j, k, l < n
+nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+
+```
+var fourSumCount = function(nums1, nums2, nums3, nums4) {
+    let map = new Map();
+    let count = 0;
+    for (let i = 0; i < nums1.length; i++) {
+        for (let j = 0; j < nums2.length; j++) {
+            const sum = nums1[i] + nums2[j];
+            map.set(sum, (map.get(sum) || 0) + 1);
+        }
+    }
+    for (let i = 0; i < nums3.length; i++) {
+        for (let j = 0; j < nums4.length; j++) {
+            const sum = nums3[i] + nums4[j];
+            count += (map.get(0 - sum) || 0);
+        }
+    }
+    return count;
 };
 ```
 
