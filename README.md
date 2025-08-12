@@ -41,6 +41,8 @@ Given an array of integers nums and an integer target, return indices of the two
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 You can return the answer in any order.
 
+#### Method1: Object
+
 ```
 var twoSum = function(nums, target) {
     let hash = {};
@@ -53,6 +55,8 @@ var twoSum = function(nums, target) {
     return [];
 };
 ```
+
+#### Method2: Map()
 
 ```
 var twoSum = function(nums, target) {
@@ -70,7 +74,6 @@ var twoSum = function(nums, target) {
 #### 🔹Question 2: Leetcode_454
 
 Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that:
-
 0 <= i, j, k, l < n
 nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 
@@ -94,6 +97,50 @@ var fourSumCount = function(nums1, nums2, nums3, nums4) {
 };
 ```
 
+#### 🔹Question 2: Leetcode_383
+
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+Each letter in magazine can only be used once in ransomNote.
+
+#### Method1: Map()
+
+```
+var canConstruct = function(ransomNote, magazine) {
+    let map = new Map();
+
+    for (let i of magazine) {
+        map.set(i, (map.get(i) || 0) + 1);
+    };
+    for (let j of ransomNote) {
+        if (!map.has(j) || map.get(j) <= 0){
+            return false;
+        }
+        map.set(j, (map.get(j) || 0) - 1);
+    }
+    return true;
+};
+```
+
+#### Method2: Array()
+
+```
+var canConstruct = function(ransomNote, magazine) {
+    let arr = new Array(26).fill(0);
+    const base = 'a'.charCodeAt();
+
+    for (let s of magazine) {
+        arr[s.charCodeAt() - base]++;
+    };
+    for (let s of ransomNote) {
+        if (!arr[s.charCodeAt() - base]){
+            return false;
+        }
+        arr[s.charCodeAt() - base]--;
+    }
+    return true;
+};
+```
+
 ---
 
 ## Hash question: Set
@@ -112,6 +159,8 @@ var fourSumCount = function(nums1, nums2, nums3, nums4) {
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 You can return the answer in any order.
+
+#### Method1: Array()
 
 ```
 var intersection = function(nums1, nums2) {
