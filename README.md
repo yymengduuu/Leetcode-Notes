@@ -56,6 +56,56 @@ A word is defined as a sequence of non-space characters. The words in s will be 
 Return a string of the words in reverse order concatenated by a single space.
 Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
 
+```
+var reverseWords = function(s) {
+    let arr = s.split(' ');
+    let array = [];
+    
+    for (let i = 0; i < arr.length; i++){
+        if (arr[i]) {
+            array.push(arr[i]);
+        }
+    }
+
+    let left = 0, right = array.length - 1;
+    while (left < right) {
+        [array[left], array[right]] = [array[right], array[left]];
+        left++;
+        right--;
+    }
+    return array.join(' ');
+};
+```
+
+
+#### 🔹Question 4: 卡码
+字符串的右旋转操作是把字符串尾部的若干个字符转移到字符串的前面。给定一个字符串 s 和一个正整数 k，请编写一个函数，将字符串中的后面 k 个字符移到字符串的前面，实现字符串的右旋转操作。.不能申请额外空间，只能在本串上操作。
+例如，对于输入字符串 "abcdefg" 和整数 2，函数应该将其转换为 "fgabcde"。
+输入：输入共包含两行，第一行为一个正整数 k，代表右旋转的位数。第二行为字符串 s，代表需要旋转的字符串。
+输出：输出共一行，为进行了右旋转操作后的字符串。
+
+```
+function reverseString(s, left, right){
+    while (left < right) {
+            [s[left], s[right]] = [s[right], s[left]];
+            left++;
+            right--;
+        }
+    return s;
+}
+
+function rotateRight(s,k){
+    let str = s.split('');
+    const length = str.length - 1;
+    
+    str = reverseString(str, 0, length);
+    str = reverseString(str, 0, k - 1)
+    str = reverseString(str, k, length)
+    
+    return str.join('');
+}
+```
+
 ---
 
 # Hash Table
