@@ -7,6 +7,65 @@
 - 'A'–'Z' = 65–90，
 - 'a'–'z' = 97–122。
 
+## KMP
+
+要在文本串：aabaabaafa 中查找是否出现过一个模式串：aabaaf。
+
+1. 前缀：
+a,
+aa,
+aab,
+aaba,
+aabaa
+
+2. 后缀：
+f,
+af,
+aaf,
+baaf,
+abaaf
+
+3. 最长相等前后缀
+a       0
+a | a   1
+aab     0
+aa| ba  1
+aa b aa 2
+aabaaf  0
+
+4. 前缀表（next/prefix）：010121 ->(整体减1）-10-1010
+前追表中最大的数字2刚好是最长前缀的长度
+
+5. 代码实现
+- 初始化：
+j前缀末尾位
+```
+j=0
+```
+
+i后缀末尾位
+
+```
+for（let i=1; i<s.size; i++)
+```
+
+- 前后缀不相同：
+
+```
+while (j > 0 && s[i] !== s[j]) {
+  j = next[j-1];
+}
+```
+
+- 前后缀相同
+
+```
+if (s[i] === s[j]) {
+  j++;
+  next[i] = j;
+}
+```
+
 ## Reverse String
 
 ### Related Questions
