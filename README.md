@@ -1,4 +1,91 @@
-代码随想录算法训练营第九天
+代码随想录算法训练营第十天
+
+# Stack
+
+**Key Points**
+
+1. 队列（Queue）的特性
+	•	FIFO：先进的先出
+	•	队头 → 最早进队的元素
+	•	队尾 → 最晚进队的元素
+
+2. 栈（Stack）的特性
+	•	LIFO：后进的先出
+	•	栈顶 → 最后进来的元素
+
+3. 两个栈如何变成一个队列, 我们用：
+	•	stackIn → 专门负责入队（push）
+	•	stackOut → 专门负责出队（pop）和 peek
+
+## Implement Quene & Stack
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_232
+
+Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+Implement the MyQueue class:
+
+void push(int x) Pushes element x to the back of the queue.
+int pop() Removes the element from the front of the queue and returns it.
+int peek() Returns the element at the front of the queue.
+boolean empty() Returns true if the queue is empty, false otherwise.
+Notes:
+
+You must use only standard operations of a stack, which means only push to top, peek/pop from top, size, and is empty operations are valid.
+Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.
+
+```
+
+var MyQueue = function() {
+    this.stackIn = [];
+    this.stackOut = [];
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function(x) {
+    this.stackIn.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.pop = function() {
+    const size = this.stackOut.length;
+    if (size) {
+        return this.stackOut.pop();
+    }
+    while (this.stackIn.length) {
+        this.stackOut.push(this.stackIn.pop());
+    }
+    return this.stackOut.pop();
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.peek = function() {
+    if (!this.stackOut.length) {
+        while (this.stackIn.length) {
+            this.stackOut.push(this.stackIn.pop());
+        }
+    }
+    return this.stackOut[this.stackOut.length - 1];
+};
+
+/**
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function() {
+    return !this.stackIn.length && !this.stackOut.length;
+};
+
+```
+
+---
 
 # String
 
