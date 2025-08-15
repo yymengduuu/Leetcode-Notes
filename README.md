@@ -202,6 +202,7 @@ Open brackets must be closed by the same type of brackets.
 Open brackets must be closed in the correct order.
 Every close bracket has a corresponding open bracket of the same type.
 
+#### Method1: switch
 ```
 var isValid = function(s) {
     let stack = [];
@@ -220,6 +221,27 @@ var isValid = function(s) {
             default:
             if (stack.length === 0 || char !== stack.pop()) return false;
         }
+    }
+    return stack.length === 0;
+};
+```
+
+#### Method2: Map
+
+```
+var isValid = function(s) {
+    let stack = [];
+    let map = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    };
+    for (let char of s) {
+        if (char in map) {
+            stack.push(char);
+            continue;
+        };
+        if(map[stack.pop()] !== char) return false; 
     }
     return stack.length === 0;
 };
