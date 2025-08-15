@@ -37,22 +37,31 @@ aabaaf  0
 前追表中最大的数字2刚好是最长前缀的长度
 
 5. 代码实现
+
 - 初始化：
+
+求next数组
+
+```
+next = [];
+```
+
 j前缀末尾位
 ```
-j=0
+j=0;
+next.push[j];
 ```
 
 i后缀末尾位
 
 ```
-for（let i=1; i<s.size; i++)
+for（let i = 1; i < needle.length; i++)
 ```
 
 - 前后缀不相同：
 
 ```
-while (j > 0 && s[i] !== s[j]) {
+while (j > 0 && needle[i] !== needle[j]) {
   j = next[j-1];
 }
 ```
@@ -60,11 +69,55 @@ while (j > 0 && s[i] !== s[j]) {
 - 前后缀相同
 
 ```
-if (s[i] === s[j]) {
+if (needle[i] === needle[j]) {
   j++;
-  next[i] = j;
+  next.push(j);
 }
 ```
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_28
+
+Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+```
+var strStr = function(haystack, needle) {
+if (needle.length === 0)
+        return 0;
+
+    const getNext = (needle) => {
+        let next = [];
+        let j = 0;
+        next.push(j);
+
+        for (let i = 1; i < needle.length; ++i) {
+            while (j > 0 && needle[i] !== needle[j])
+                j = next[j - 1];
+            if (needle[i] === needle[j])
+                j++;
+            next.push(j);
+        }
+
+        return next;
+    }
+
+    let next = getNext(needle);
+    let j = 0;
+    for (let i = 0; i < haystack.length; ++i) {
+        while (j > 0 && haystack[i] !== needle[j])
+            j = next[j - 1];
+        if (haystack[i] === needle[j])
+            j++;
+        if (j === needle.length)
+            return (i - needle.length + 1);
+    }
+
+    return -1;
+};
+```
+
+---
 
 ## Reverse String
 
