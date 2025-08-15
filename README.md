@@ -30,9 +30,29 @@
 | **现实类比** | 一摞盘子：最后放的盘子最先拿 | 排队买票：最早排队的人先买到票 |
 | **常用操作** | `push()` 压栈<br>`pop()` 出栈<br>`peek()` 查看栈顶 | `enqueue()` 入队<br>`dequeue()` 出队<br>`peek()` 查看队首 |
 
+栈（Stack）
+
+tail [1, 2, 3] top
+
+| 操作        |  代码  |  变化  |  Top  |
+|-------------|------------|---------------|---------------|
+| In        |  push(4)  |  [1,2,3,4]  |  4  |
+| Out        |  pop()  |  [1,2,3]  |  3  |
+
+队列（Queue）
+
+top [1, 2, 3] tail
+
+| 操作        |  代码  |  变化  |  Top  |
+|-------------|------------|---------------|---------------|
+| In        |  push(4)  |  [1,2,3,4]  |  1  |
+| Out        |  shift()  |  [2,3,4]  |  2  |
+
+
 5. 常用操作解释
 
 栈（Stack）
+
 - `push(x)`：将元素压入栈顶
 - `pop()`：移除栈顶元素并返回
 - `peek()`：查看栈顶元素但不移除
@@ -113,6 +133,57 @@ MyQueue.prototype.empty = function() {
     return !this.stackIn.length && !this.stackOut.length;
 };
 
+```
+
+#### 🔹Question 2: Leetcode_225
+
+Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (push, top, pop, and empty).
+Implement the MyStack class:
+
+void push(int x) Pushes element x to the top of the stack.
+int pop() Removes the element on the top of the stack and returns it.
+int top() Returns the element on the top of the stack.
+boolean empty() Returns true if the stack is empty, false otherwise.
+
+```
+var MyStack = function() {
+    this.quene = [];
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function(x) {
+    this.quene.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    let size = this.quene.length;
+    while (size-- > 1){
+        this.quene.push(this.quene.shift());
+    }
+    return this.quene.shift();
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    const x = this.quene.pop();
+    this.quene.push(x);
+    return x;
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    return !this.quene.length;
+};
 ```
 
 ---
