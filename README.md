@@ -273,6 +273,42 @@ var removeDuplicates = function(s) {
 };
 ```
 
+#### 🔹Question 3: Leetcode_15
+
+根据 逆波兰表示法，求表达式的值。
+有效的运算符包括 + ,  - ,  * ,  / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。
+
+```
+var evalRPN = function(tokens) {
+    let stack = [];
+    let res = 0;
+    for (let i = 0; i< tokens.length; i++) {
+        let token = tokens[i];
+        if (isNaN(Number(token))){
+            const n2 = stack.pop();
+            const n1 = stack.pop();
+            switch(token) {
+                case "+":
+                stack.push(n1 + n2);
+                break;
+                case "-":
+                stack.push(n1 - n2);
+                break;
+                case "*":
+                stack.push(n1 *n2);
+                break;
+                case "/":
+                stack.push(n1 / n2 | 0);
+                break;
+            }
+        } else {
+            stack.push(Number(token));
+        }
+    }
+    return stack[0];
+};
+```
+
 ---
 
 # String
