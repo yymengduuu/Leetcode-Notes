@@ -73,6 +73,209 @@ top [1, 2, 3] tail
 
 ---
 
+## Implement Stack
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_20
+
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+
+#### Method1: switch
+```
+var isValid = function(s) {
+    let stack = [];
+    for (let i = 0; i < s.length; i++) {
+        let char = s[i];
+        switch(char) {
+            case '(':
+            stack.push(')');
+            break;
+            case '[':
+            stack.push(']');
+            break;
+            case '{':
+            stack.push('}');
+            break;
+            default:
+            if (stack.length === 0 || char !== stack.pop()) return false;
+        }
+    }
+    return stack.length === 0;
+};
+```
+
+#### Method2: Map
+
+```
+var isValid = function(s) {
+    let stack = [];
+    let map = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    };
+    for (let char of s) {
+        if (char in map) {
+            stack.push(char);
+            continue;
+        };
+        if(map[stack.pop()] !== char) return false; 
+    }
+    return stack.length === 0;
+};
+```
+
+#### 🔹Question 2: Leetcode_1047
+
+You are given a string s consisting of lowercase English letters. A duplicate removal consists of choosing two adjacent and equal letters and removing them.
+We repeatedly make duplicate removals on s until we no longer can.
+Return the final string after all such duplicate removals have been made. It can be proven that the answer is unique.
+
+```
+var removeDuplicates = function(s) {
+    let stack = [];
+    for (let i = 0; i < s.length; i++) {
+        if (stack.length > 0 && stack[stack.length - 1] === s[i]) {
+            stack.pop();
+        } else {
+            stack.push(s[i]);
+        }
+    }
+    return stack.join('');
+};
+```
+
+#### 🔹Question 3: Leetcode_15
+
+根据 逆波兰表示法，求表达式的值。
+有效的运算符包括 + ,  - ,  * ,  / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。
+
+```
+var evalRPN = function(tokens) {
+    let stack = [];
+    let res = 0;
+    for (let i = 0; i< tokens.length; i++) {
+        let token = tokens[i];
+        if (isNaN(Number(token))){
+            const n2 = stack.pop();
+            const n1 = stack.pop();
+            switch(token) {
+                case "+":
+                stack.push(n1 + n2);
+                break;
+                case "-":
+                stack.push(n1 - n2);
+                break;
+                case "*":
+                stack.push(n1 *n2);
+                break;
+                case "/":
+                stack.push(n1 / n2 | 0);
+                break;
+            }
+        } else {
+            stack.push(Number(token));
+        }
+    }
+    return stack[0];
+};
+```
+
+#### 🔹Question 4: Leetcode_347
+
+给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
+
+返回滑动窗口中的最大值。
+
+```
+var maxSlidingWindow = function (nums, k) {
+    class MonoQueue {
+        queue;
+        constructor() {
+            this.queue = [];
+        }
+        enqueue(value) {
+        // enqueue 保证队列单调递减，最大值一直在队首。
+            let back = this.queue[this.queue.length - 1];
+            while (back !== undefined && back < value) {
+                this.queue.pop();
+                back = this.queue[this.queue.length - 1];
+            }
+            this.queue.push(value);
+        }
+        dequeue(value) {
+        // 	dequeue 把滑出窗口的值移走（只在它等于队首时才删）。
+            let front = this.front();
+            if (front === value) {
+                this.queue.shift();
+            }
+        }
+        front() {
+            return this.queue[0];
+        }
+    }
+    let helperQueue = new MonoQueue();
+    let i = 0, j = 0;
+    let resArr = [];
+    while (j < k) {
+        helperQueue.enqueue(nums[j++]);
+    }
+    resArr.push(helperQueue.front());
+    while (j < nums.length) {
+        helperQueue.enqueue(nums[j]);
+        helperQueue.dequeue(nums[i]);
+        resArr.push(helperQueue.front());
+        // 每次 front() 取的就是当前窗口最大值。
+        i++, j++;
+    }
+    return resArr;
+};
+```
+
+#### 🔹Question 5: Leetcode_347
+
+给定一个非空的整数数组，返回其中出现频率前 k 高的元素。
+
+示例 1:
+
+输入: nums = [1,1,1,2,2,3], k = 2
+输出: [1,2]
+示例 2:
+
+输入: nums = [1], k = 1
+输出: [1]
+
+```
+var topKFrequent = function (nums, k) {
+  const map = new Map();
+  const res = [];
+  //使用 map 统计元素出现频率
+  for (const num of nums) {
+    map.set(num, (map.get(num) || 0) + 1);
+  }
+  //创建小顶堆
+  const heap = new PriorityQueue({
+    compare: (a, b) => a.value - b.value
+  })
+  for (const [key, value] of map) {
+    heap.enqueue({ key, value });
+    if (heap.size() > k) heap.dequeue();
+  }
+  //处理输出
+  while (heap.size()) res.push(heap.dequeue().key);
+  return res;
+};
+```
+
+---
+
 ## Implement Quene & Stack
 
 ### Related Questions
@@ -194,122 +397,7 @@ MyStack.prototype.empty = function() {
 
 ---
 
-## Implement Stack
 
-### Related Questions
-
-#### 🔹Question 1: Leetcode_20
-
-Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-
-An input string is valid if:
-
-Open brackets must be closed by the same type of brackets.
-Open brackets must be closed in the correct order.
-Every close bracket has a corresponding open bracket of the same type.
-
-#### Method1: switch
-```
-var isValid = function(s) {
-    let stack = [];
-    for (let i = 0; i < s.length; i++) {
-        let char = s[i];
-        switch(char) {
-            case '(':
-            stack.push(')');
-            break;
-            case '[':
-            stack.push(']');
-            break;
-            case '{':
-            stack.push('}');
-            break;
-            default:
-            if (stack.length === 0 || char !== stack.pop()) return false;
-        }
-    }
-    return stack.length === 0;
-};
-```
-
-#### Method2: Map
-
-```
-var isValid = function(s) {
-    let stack = [];
-    let map = {
-        '(': ')',
-        '[': ']',
-        '{': '}'
-    };
-    for (let char of s) {
-        if (char in map) {
-            stack.push(char);
-            continue;
-        };
-        if(map[stack.pop()] !== char) return false; 
-    }
-    return stack.length === 0;
-};
-```
-
-#### 🔹Question 2: Leetcode_1047
-
-You are given a string s consisting of lowercase English letters. A duplicate removal consists of choosing two adjacent and equal letters and removing them.
-We repeatedly make duplicate removals on s until we no longer can.
-Return the final string after all such duplicate removals have been made. It can be proven that the answer is unique.
-
-```
-var removeDuplicates = function(s) {
-    let stack = [];
-    for (let i = 0; i < s.length; i++) {
-        if (stack.length > 0 && stack[stack.length - 1] === s[i]) {
-            stack.pop();
-        } else {
-            stack.push(s[i]);
-        }
-    }
-    return stack.join('');
-};
-```
-
-#### 🔹Question 3: Leetcode_15
-
-根据 逆波兰表示法，求表达式的值。
-有效的运算符包括 + ,  - ,  * ,  / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。
-
-```
-var evalRPN = function(tokens) {
-    let stack = [];
-    let res = 0;
-    for (let i = 0; i< tokens.length; i++) {
-        let token = tokens[i];
-        if (isNaN(Number(token))){
-            const n2 = stack.pop();
-            const n1 = stack.pop();
-            switch(token) {
-                case "+":
-                stack.push(n1 + n2);
-                break;
-                case "-":
-                stack.push(n1 - n2);
-                break;
-                case "*":
-                stack.push(n1 *n2);
-                break;
-                case "/":
-                stack.push(n1 / n2 | 0);
-                break;
-            }
-        } else {
-            stack.push(Number(token));
-        }
-    }
-    return stack[0];
-};
-```
-
----
 
 # String
 
