@@ -4,6 +4,24 @@
 
 ## Binary Tree Traversal
 
+**Key Points**
+
+- Pre-order: 根 → 左子树 → 右子树
+  
+1. 先访问根，所以常用于：复制树、输出树结构
+2. 比如表达式树，前序得到 前缀表达式。
+
+- In-order: 左子树 → 根 → 右子树
+  
+1. 在二叉搜索树 (BST) 里，中序遍历的结果是升序排列
+2. 所以经常用来：检查 BST 正确性、输出有序序列。
+
+- Postorder: 左子树 → 右子树 → 根
+
+1. 根在最后，常用于：删除 / 释放树、计算子树结果后再处理父节点
+2. 在表达式树里，后序得到 后缀表达式 (逆波兰表达式)。
+
+
 ### Related Questions
 
 #### 🔹Question 1: Leetcode_144
@@ -20,6 +38,24 @@ var preorderTraversal = function(root) {
         dfs(root.left);
         dfs(root.right);
     };
+    dfs(root);
+    return ans;
+};
+```
+
+#### 🔹Question 2: Leetcode_145
+
+Given the root of a binary tree, return the **postorder** traversal of its nodes' values.
+
+```
+var postorderTraversal = function(root) {
+    let ans = [];
+    const dfs = function(root){
+        if (root === null) return;
+        dfs(root.left);
+        dfs(root.right);
+        ans.push(root.val);
+    }
     dfs(root);
     return ans;
 };
