@@ -31,6 +31,92 @@ var levelOrder = function(root) {
 };
 ```
 
+#### 🔹Question 2: Leetcode_107 (102的反转）
+
+Given the root of a binary tree, return the bottom-up level order traversal of its nodes' values. (i.e., from left to right, level by level from leaf to root).
+
+```
+var levelOrderBottom = function(root) {
+    let res = [];
+    if (root === null) return res;
+    let queue = [root];
+
+    while (queue.length) {
+        let size = queue.length;
+        let cur = [];
+        for (let i = 0; i < size; i++) {
+            let node = queue.shift();
+            cur.push(node.val);
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        res.push(cur);
+    }
+    return res.reverse();
+};
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
+
 ---
 
 ## DFS（Depth First Search，深度优先搜索）
