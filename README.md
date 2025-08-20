@@ -61,6 +61,24 @@ var postorderTraversal = function(root) {
 };
 ```
 
+#### 🔹Question 3: Leetcode_94
+
+Given the root of a binary tree, return the **inorder** traversal of its nodes' values.
+
+```
+var inorderTraversal = function(root) {
+    let ans = [];
+    const dfs = function(root){
+        if (root === null) return;
+        dfs(root.left);
+        ans.push(root.val);
+        dfs(root.right);
+    }
+    dfs(root);
+    return ans;
+};
+```
+
 ---
 
 # Stack
