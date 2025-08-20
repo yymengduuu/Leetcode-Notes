@@ -124,7 +124,22 @@ var inorderTraversal = function(root) {
 #### Method2: DFS迭代
 
 ```
+var inorderTraversal = function(root, res = []) {
+    const stack = [];
+    let cur = root;
 
+    while (stack.length || cur) {
+        if (cur) {
+            stack.push(cur);
+            cur = cur.left;
+        } else {
+            cur = stack.pop();
+            res.push(cur.val);
+            cur = cur.right;
+        }
+    }
+    return res;
+};
 ```
 
 ---
