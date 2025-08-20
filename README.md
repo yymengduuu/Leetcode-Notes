@@ -56,7 +56,7 @@ var levelOrderBottom = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_199
+#### 🔹Question 3: Leetcode_199
 
 Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
 
@@ -86,10 +86,35 @@ var rightSideView = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 4: Leetcode_637
+
+Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.
+
+**Key Points**
+
+只需要累加每一层所有数字，每历遍一次后再用累加的和除以该层的长度；
 
 ```
+var averageOfLevels = function(root) {
+    let res = [];
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        let cur = [];
+        let sum = 0;
+        for (let i = 0; i < size; i++ ) {
+            let node = queue.shift();
+            cur.push(node.val);
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+            sum += node.val;
+        }
+        let ave = sum / size;
+        res.push(ave);
+    }
+    return res;
+};
 ```
 
 #### 🔹Question : Leetcode_
