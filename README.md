@@ -28,6 +28,8 @@
 
 Given the root of a binary tree, return the **preorder** traversal of its nodes' values.
 
+#### Method1: DFS递归
+
 ```
 var preorderTraversal = function(root) {
     let ans = [];
@@ -43,9 +45,29 @@ var preorderTraversal = function(root) {
 };
 ```
 
+#### Method2: DFS迭代
+
+```
+var preorderTraversal = function(root, res = []) {
+    if (root === null) return res;
+    let stack = [root]; //压入了节点而不是val，类似于stack = [ { val: 1, left: {...}, right: {...} } ]
+    let cur = null;
+
+    while (stack.length) {
+      cur = stack.pop();
+      res.push(cur.val);
+      cur.right && stack.push(cur.right);
+      cur.left && stack.push(cur.left);
+    }
+    return res;
+};
+```
+
 #### 🔹Question 2: Leetcode_145
 
 Given the root of a binary tree, return the **postorder** traversal of its nodes' values.
+
+#### Method1: DFS递归
 
 ```
 var postorderTraversal = function(root) {
@@ -61,9 +83,18 @@ var postorderTraversal = function(root) {
 };
 ```
 
+#### Method2: DFS迭代
+
+```
+
+```
+
+
 #### 🔹Question 3: Leetcode_94
 
 Given the root of a binary tree, return the **inorder** traversal of its nodes' values.
+
+#### Method1: DFS递归
 
 ```
 var inorderTraversal = function(root) {
@@ -77,6 +108,12 @@ var inorderTraversal = function(root) {
     dfs(root);
     return ans;
 };
+```
+
+#### Method2: DFS迭代
+
+```
+
 ```
 
 ---
