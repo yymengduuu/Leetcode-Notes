@@ -1,4 +1,30 @@
-代码随想录算法训练营第十一天
+代码随想录算法训练营第十五天
+
+# Binary Tree
+
+## Binary Tree Traversal
+
+### Related Questions
+
+#### 🔹Question 1: Leetcode_144
+
+Given the root of a binary tree, return the **preorder** traversal of its nodes' values.
+
+```
+var preorderTraversal = function(root) {
+    let ans = [];
+    const dfs = function(root){
+        if(root === null) return;
+        ans.push(root.val);
+        dfs(root.left);
+        dfs(root.right);
+    };
+    dfs(root);
+    return ans;
+};
+```
+
+---
 
 # Stack
 
