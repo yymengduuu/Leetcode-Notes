@@ -244,16 +244,57 @@ var connect = function(root) {
 };
 ```
 
-#### 🔹Question 9: Leetcode_
+#### 🔹Question 9: Leetcode_104
+
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
 ```
+var maxDepth = function(root) {
+    let depth = 0;
+    if (root === null) return depth;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        while (size--) {
+            let node = queue.shift();
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        depth++;
+    }
+    return depth;
+};
 ```
 
-#### 🔹Question 10: Leetcode_
+#### 🔹Question 10: Leetcode_111
+
+Given a binary tree, find its minimum depth.
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+Note: A leaf is a node with no children.
 
 ```
+var minDepth = function(root) {
+    let depth = 0;
+    if (root === null) return depth;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        depth ++;
+        while (size--) {
+            let node = queue.shift();
+            if (node.left === null && node.right === null) {
+                return depth;
+            }
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return depth;
+};
 ```
 
 #### 🔹Question : Leetcode_
