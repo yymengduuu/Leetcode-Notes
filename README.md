@@ -56,10 +56,34 @@ var levelOrderBottom = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question : Leetcode_199
+
+Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+**Key Points**
+
+只需要每一层最后的那个数字，所以决定的关键因素是当i达到length-1；
 
 ```
+var rightSideView = function(root) {
+    let res = [];
+    if (root === null) return res;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+
+        for (let i = 0; i < size; i++ ){
+            let node = queue.shift();
+            if (i === size - 1) {
+                res.push(node.val);
+            }
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return res;
+};
 ```
 
 #### 🔹Question : Leetcode_
