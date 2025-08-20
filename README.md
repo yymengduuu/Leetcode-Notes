@@ -117,37 +117,62 @@ var averageOfLevels = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 5: Leetcode_429
+
+Given an n-ary tree, return the level order traversal of its nodes' values.
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+
+**Key Points**
+
+每一层可能有两个以上，用node.children替代left/right；
+
+```
+var levelOrder = function(root) {
+    let res = [];
+    if (root === null) return res;
+    let queue = [root];
+    
+    while (queue.length) {
+        let cur = [];
+        let size = queue.length;
+        while (size--) {
+            let node = queue.shift();
+            cur.push(node.val);
+            for (let i of node.children) {
+                i && queue.push(i);
+            }
+        }
+        res.push(cur);
+    }
+    return res;
+};
+```
+
+#### 🔹Question 6: Leetcode_
 
 ```
 
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 7: Leetcode_
 
 ```
 
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 8: Leetcode_
 
 ```
 
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 9: Leetcode_
 
 ```
 
 ```
 
-#### 🔹Question : Leetcode_
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
+#### 🔹Question 10: Leetcode_
 
 ```
 
