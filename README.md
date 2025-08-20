@@ -148,22 +148,100 @@ var levelOrder = function(root) {
 };
 ```
 
-#### 🔹Question 6: Leetcode_
+#### 🔹Question 6: Leetcode_515
+
+Given the root of a binary tree, return an array of the largest value in each row of the tree (0-indexed).
+
+**Key Points**
+
+每一次历遍都比较记录最大值，每一层历遍后push最大值；
 
 ```
-
+var largestValues = function(root) {
+    let res = [];
+    if (root === null) return res;
+    let queue = [root];
+    while (queue.length) {
+        let size = queue.length;
+        let cur = -Infinity;
+        while (size--) {
+            let node = queue.shift();
+            cur = Math.max(cur, node.val)
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        res.push(cur);
+    }
+    return res;
+};
 ```
 
-#### 🔹Question 7: Leetcode_
+#### 🔹Question 7: Leetcode_116
+
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
 
 ```
+var connect = function(root) {
+    if (root === null) return root;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        for (let i = 0; i < size; i++ ) {
+            let node = queue.shift();
+            if (i < size - 1) {
+                node.next = queue[0];
+            }
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return root;
+};
 ```
 
-#### 🔹Question 8: Leetcode_
+#### 🔹Question 8: Leetcode_117(与116的完整二叉树没有区别)
+
+Given a binary tree
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
 
 ```
+var connect = function(root) {
+    if (root === null) return root;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        for (let i = 0; i < size; i++ ) {
+            let node = queue.shift();
+            if (i < size - 1) {
+                node.next = queue[0];
+            }
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return root;
+};
 ```
 
 #### 🔹Question 9: Leetcode_
