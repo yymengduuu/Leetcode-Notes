@@ -14,6 +14,7 @@ Given the root of a binary tree, return the **preorder** traversal of its nodes'
 var preorderTraversal = function(root) {
     let ans = [];
     const dfs = function(root){
+    // dfs: Depth-First Search
         if(root === null) return;
         ans.push(root.val);
         dfs(root.left);
