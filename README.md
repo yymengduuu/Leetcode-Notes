@@ -86,7 +86,18 @@ var postorderTraversal = function(root) {
 #### Method2: DFS迭代
 
 ```
-
+var postorderTraversal = function(root, res = []) {
+    if (root === null) return res;
+    const stack = [root];
+    let cur = null;  
+    while (stack.length) {
+        cur = stack.pop();
+        res.push(cur.val);
+        cur.left && stack.push(cur.left);
+        cur.right && stack.push(cur.right);
+    }
+    return res.reverse();
+};
 ```
 
 
