@@ -8,11 +8,11 @@
 
 Given the root of a binary tree, invert the tree, and return its root.
 
-#### Method1: DFS递归
-
 **Key Points**
 
 核心思想就是需要用temp暂时记录root.left或root.right的值，然后进行交换；
+
+#### Method1: DFS递归
 
 ```
 var invertTree = function(root) {
@@ -45,11 +45,144 @@ var invertTree = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+var isSymmetric = function(root) {
+    if (root === null) return true; 
+    const compare = function(left,right){
+        if (!left && !right) return true;
+        if (!left || !right) return false;
+        if (left.val !== right.val) return false;  
+        let inSide = compare(left.right,right.left);
+        let outSide = compare(left.left, right.right);  
+        return inSide && outSide;     
+    }
+    return compare(root.left, root.right);
+};
+```
+
+#### Method2: BFS层序
+
+```
+var isSymmetric = function(root) {
+    if (root === null) return true;
+    let queue = [root.left, root.right];
+    while (queue.length) {
+        
+        let left = queue.shift();
+        let right = queue.shift();
+        if (!left && !right) continue;
+        if (!left || !right) return false;
+        if (left.val !== right. val) return false;           
+        queue.push(left.left, right.right);
+        queue.push(left.right, right.left);
+    }
+    return true;
+};
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
 
 ```
 
 ```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+#### 🔹Question : Leetcode_101
+
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: BFS层序
+
+```
+
+```
+
+---
 
 ## BFS（Breadth First Search，广度优先搜索）
 
