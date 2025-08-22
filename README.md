@@ -2,6 +2,55 @@
 
 # Binary Tree
 
+### Related Questions
+
+#### 🔹Question 翻转二叉树: Leetcode_226
+
+Given the root of a binary tree, invert the tree, and return its root.
+
+#### Method1: DFS递归
+
+**Key Points**
+
+核心思想就是需要用temp暂时记录root.left或root.right的值，然后进行交换；
+
+```
+var invertTree = function(root) {
+    if(root === null) return root;
+    const tem = root.right;
+    root.right = invertTree(root.left);
+    root.left = invertTree(tem);
+    return root;
+};
+```
+
+#### Method2: BFS层序
+
+```
+var invertTree = function(root) {
+    if(root === null) return root;
+    let queue = [root];
+    while (queue.length) {
+        let size = queue.length;
+        for (let i = 0; i < size; i++ ) {
+            let node = queue.shift();
+            let tem = node.left;
+            node.left = node.right;
+            node.right = tem;
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return root;
+};
+```
+
+#### 🔹Question : Leetcode_
+
+```
+
+```
+
 ## BFS（Breadth First Search，广度优先搜索）
 
 ### Related Questions
@@ -296,19 +345,6 @@ var minDepth = function(root) {
     return depth;
 };
 ```
-
-#### 🔹Question : Leetcode_
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-```
-
-```
-
 
 ---
 
