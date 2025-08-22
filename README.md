@@ -45,9 +45,13 @@ var invertTree = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_101
+#### 🔹Question 对称二叉树: Leetcode_101
 
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+**Key Points**
+
+核心是位置和值的对称；
 
 #### Method1: DFS递归
 
@@ -86,36 +90,91 @@ var isSymmetric = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_101
+#### 🔹Question 最大深度: Leetcode_101
 
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+Given the root of a binary tree, return its maximum depth.
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
 #### Method1: DFS递归
 
 ```
-
+var maxDepth = function(root) {
+    const getDepth = function(node) {
+        if (node === null) return 0;
+        let leftDepth = getDepth(node.left);
+        let rightDepth = getDepth(node.right);
+        let depth = Math.max(leftDepth, rightDepth) + 1;
+        return depth;
+    }
+    return getDepth(root);
+};
 ```
 
 #### Method2: BFS层序
 
 ```
+var maxDepth = function(root) {
+    let depth = 0;
+    if (root === null) return depth;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        while (size--) {
+            let node = queue.shift();
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+        depth++;
+    }
+    return depth;
+};
 ```
 
-#### 🔹Question : Leetcode_101
+#### 🔹Question 最小深度: Leetcode_111
 
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+Given a binary tree, find its minimum depth.
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+Note: A leaf is a node with no children.
 
 #### Method1: DFS递归
 
 ```
-
+var minDepth = function(root) {
+    const getDepth = function(node) {
+        if (node === null) return 0;
+        let leftDepth = getDepth(node.left);
+        let rightDepth = getDepth(node.right);
+        if (!node.left && node.right) return 1 + rightDepth;
+        if (!node.right && node.left) return 1 + leftDepth;
+        return 1 + Math.min(leftDepth, rightDepth);
+    }
+    return getDepth(root);
+};
 ```
 
 #### Method2: BFS层序
 
 ```
+var minDepth = function(root) {
+    let depth = 0;
+    if (root === null) return depth;
+    let queue = [root];
 
+    while (queue.length) {
+        let size = queue.length;
+        depth ++;
+        while (size--) {
+            let node = queue.shift();
+            if (node.left === null && node.right === null) {
+                return depth;
+            }
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }
+    return depth;
+};
 ```
 
 #### 🔹Question : Leetcode_101
@@ -485,6 +544,8 @@ var minDepth = function(root) {
 
 **Key Points**
 
+- DFS本质是调用栈，函数调用（call） 本质就是一次「压栈」动作
+
 - Pre-order: 根 → 左子树 → 右子树
   
 1. 先访问根，所以常用于：复制树、输出树结构
@@ -516,8 +577,8 @@ var preorderTraversal = function(root) {
     // dfs: Depth-First Search
         if(root === null) return;
         ans.push(root.val);
-        dfs(root.left);
-        dfs(root.right);
+        dfs(root.left); //压栈
+        dfs(root.right); // 压栈
     };
     dfs(root);
     return ans;
