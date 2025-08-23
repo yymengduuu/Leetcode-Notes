@@ -208,27 +208,55 @@ var isBalanced = function(root) {
 Given the root of a binary tree, return all root-to-leaf paths in any order.
 A leaf is a node with no children.
 
+```
+var binaryTreePaths = function(root) {
+    let res = [];
+    let path = [];
+    if (!root) return res;
 
+    const dfs = function(node){
+        path.push(node.val);
+        if (!node.left && !node.right) {
+            res.push(path.join('->'));
+        }
+        if (node.left) dfs(node.left);
+        if (node.right) dfs(node.right);
+        path.pop();
+    } 
+    dfs(root);
+    return res;
+};
 ```
 
-```
 
+#### 🔹Question 左叶子之和: Leetcode_404
 
-#### 🔹Question : Leetcode_101
-
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
-
-#### Method1: DFS递归
+Given the root of a binary tree, return the sum of all left leaves.
+A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
 
 ```
+var sumOfLeftLeaves = function(root) {
 
+    const getLeftLeaf = function(node) {
+        if (!node) return 0;
+        if (!node.left && !node.right) return 0;
+
+        let sum = 0;
+        let leftValue = getLeftLeaf(node.left);
+        let rightValue = getLeftLeaf(node.right);
+        let midValue = 0;
+
+        if (node.left && !node.left.left && !node.left.right) {
+            midValue = node.left.val;
+        }
+        
+        sum = midValue + leftValue + rightValue;
+        return sum;
+    }
+    return getLeftLeaf(root);
+};
 ```
 
-#### Method2: BFS层序
-
-```
-
-```
 
 #### 🔹Question : Leetcode_101
 
