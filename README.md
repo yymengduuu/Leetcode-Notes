@@ -1,4 +1,4 @@
-代码随想录算法训练营第十五天
+代码随想录算法训练营第十七天
 
 # Binary Tree
 
@@ -177,37 +177,42 @@ var minDepth = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_101
+#### 🔹Question 平衡二叉树: Leetcode_110
 
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+Given a binary tree, determine if it is height-balanced(A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.).
 
-#### Method1: DFS递归
+**Key Points**
+
+二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数，用前序遍历;二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数，用后序遍历。
+
+```
+var isBalanced = function(root) {
+    const getDepth = function(node){
+        if (!node) return 0;
+        let leftDepth = getDepth(node.left);
+        let rightDepth = getDepth(node.right);
+        if (leftDepth === -1) return -1;
+        if (rightDepth === -1) return -1;
+        if (Math.abs(leftDepth - rightDepth) > 1) {
+            return -1;
+        } else {
+            return 1 + Math.max(leftDepth, rightDepth);
+        }
+    }
+    return getDepth(root) !== -1;
+};
+```
+
+#### 🔹Question 二叉树的所有路径: Leetcode_257
+
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+A leaf is a node with no children.
+
 
 ```
 
 ```
 
-#### Method2: BFS层序
-
-```
-
-```
-
-#### 🔹Question : Leetcode_101
-
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: BFS层序
-
-```
-
-```
 
 #### 🔹Question : Leetcode_101
 
