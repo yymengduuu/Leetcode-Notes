@@ -349,19 +349,74 @@ var hasPathSum = function(root, targetSum) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question : Leetcode_113
 
+Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
 
 #### Method1: DFS递归
 
 ```
-
+var pathSum = function(root, targetSum) {
+    const res = [];
+    let path = [];
+    const traversal = function(node, cnt) {
+        path.push(node.val);
+        if(cnt === 0 && !node.left && !node.right){
+            res.push([...path]);
+            path.pop();
+            return;
+        }
+        if(!node.left && !node.right) {
+            path.pop();
+            return;
+        }
+        if(node.left) {
+            traversal(node.left, cnt - node.left.val);
+        }
+        if(node.right) {
+            traversal(node.right, cnt - node.right.val);
+        }
+        path.pop();
+        return;
+    }
+    if(!root) return [];
+    traversal(root, targetSum - root.val);
+    return res;
+};
 ```
 
 #### Method2: DFS迭代
 
 ```
+var pathSum = function(root, targetSum) {
+    let res = [];
+    if(!root) return res;
+    let queue = [root];
+    let valueQ = [root.val];
+    let pathQ = [[root.val]];
 
+    while(queue.length) {
+        let node = queue.shift();
+        let value = valueQ.shift();
+        let path = pathQ.shift();
+
+        if (!node.left && !node.right && targetSum === value) {
+            res.push(path);
+        }
+        if (node.left) {
+            queue.push(node.left);
+            valueQ.push(value + node.left.val);
+            pathQ.push([...path, node.left.val]);
+        }
+        if (node.right) {
+            queue.push(node.right);
+            valueQ.push(value + node.right.val);
+            pathQ.push([...path, node.right.val]);
+        }
+    }
+    return res;
+};
 ```
 
 #### 🔹Question : Leetcode_
