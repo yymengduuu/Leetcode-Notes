@@ -90,7 +90,7 @@ var isSymmetric = function(root) {
 };
 ```
 
-#### 🔹Question 最大深度: Leetcode_101
+#### 🔹Question 最大深度: Leetcode_104
 
 Given the root of a binary tree, return its maximum depth.
 A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
@@ -258,9 +258,48 @@ var sumOfLeftLeaves = function(root) {
 ```
 
 
-#### 🔹Question : Leetcode_101
+#### 🔹Question 完全二叉树的节点个数: Leetcode_222
 
-Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+Given the root of a complete binary tree, return the number of the nodes in the tree.
+According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+Design an algorithm that runs in less than O(n) time complexity.
+
+#### Method1: DFS递归
+
+```
+var countNodes = function(root) {
+    const getNodeSum = function(node) {
+        if(!node) return 0;       
+        let leftSum = getNodeSum(node.left);
+        let rightSum = getNodeSum(node.right);
+        return leftSum + rightSum + 1;
+    }
+    return getNodeSum(root);
+};
+```
+
+#### Method2: DFS迭代
+
+```
+var countNodes = function(root) {
+    if(!root) return 0;
+    let queue = [root];
+    let sum = 0;
+    while(queue.length) {
+        let size = queue.length;
+        for (let i = 0; i < size; i++) {
+            let node = queue.pop();
+            sum += 1;
+            node.left && queue.push(node.left);
+            node.right && queue.push(node.right);
+        }
+    }  
+    return sum; 
+};
+```
+
+#### 🔹Question : Leetcode_
+
 
 #### Method1: DFS递归
 
@@ -268,7 +307,172 @@ Given the root of a binary tree, check whether it is a mirror of itself (i.e., s
 
 ```
 
-#### Method2: BFS层序
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
 
 ```
 
