@@ -1,4 +1,4 @@
-代码随想录算法训练营第十七天
+代码随想录算法训练营第十八天
 
 # Binary Tree
 
@@ -278,7 +278,7 @@ var countNodes = function(root) {
 };
 ```
 
-#### Method2: DFS迭代
+#### Method2: BFS层序
 
 ```
 var countNodes = function(root) {
@@ -298,19 +298,55 @@ var countNodes = function(root) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 路径总和: Leetcode_112
 
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+A leaf is a node with no children.
 
 #### Method1: DFS递归
 
 ```
+var hasPathSum = function(root, targetSum) {
+    
+    const travelsal = function(node,count) {
+        if(count === 0 && !node.left && !node.right) return true; 
+        // 在叶子节点判断是否满足条件，满足才进入递归
+        if(!node.left && !node.right) return false; 
+        // 到叶子但没凑够条件，终止
 
+        if(node.left && travelsal(node.left, count - node.left.val)) return true;
+        if(node.right && travelsal(node.right, count - node.right.val)) return true;
+        return false;
+        // 递归的兜底出口，保证所有路径都走完没找到，就明确告诉上层没有符合条件的路径
+    }
+    if(!root) return false;
+    return travelsal(root, targetSum - root.val);
+};
 ```
 
-#### Method2: DFS迭代
+#### Method2: BFS迭代
 
 ```
-
+var hasPathSum = function(root, targetSum) {
+    if(!root) return false;
+    let queue = [root];
+    let valueQ = [0];
+    while(queue.length) {
+        let node = queue.shift();
+        let val = valueQ.shift();
+        val += node.val;
+        if (!node.left && !node.right && targetSum === val) return true;
+        if (node.left) {
+            queue.push(node.left);
+            valueQ.push(val);
+        }
+        if (node.right) {
+            queue.push(node.right);
+            valueQ.push(val);
+        }
+    }
+    return false;
+};
 ```
 
 #### 🔹Question : Leetcode_
