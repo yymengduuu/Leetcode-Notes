@@ -59,19 +59,36 @@ var buildTree = function(preorder, inorder) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 最大二叉树: Leetcode_654
 
+You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
 
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
+Create a root node whose value is the maximum value in nums.
+Recursively build the left subtree on the subarray prefix to the left of the maximum value.
+Recursively build the right subtree on the subarray suffix to the right of the maximum value.
+Return the maximum binary tree built from nums.
 
 ```
+var constructMaximumBinaryTree = function(nums) {
+    const buildTree = function(left, right, arr) {
+        if(left > right) return null;
+        let maxValue = -1;
+        let maxIndex = -1;
+        for(let i = left; i <= right; i++) {
+            if(arr[i] > maxValue) {
+                maxValue = arr[i];
+                maxIndex = i;
+            }
+        }
 
+        let root = new TreeNode(maxValue);
+        root.left = buildTree(left, maxIndex - 1, arr);
+        root.right = buildTree(maxIndex + 1, right, arr);
+        return root;
+    }
+    root = buildTree(0, nums.length - 1, nums);
+    return root;
+};
 ```
 
 #### 🔹Question : Leetcode_
