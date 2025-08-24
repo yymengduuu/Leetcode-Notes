@@ -4,6 +4,182 @@
 
 ### Related Questions
 
+#### 🔹Question 从中序与后序遍历序列构造二叉树: Leetcode_106
+
+Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
+
+**Key Points**
+
+- 第一步：如果数组大小为零的话，说明是空节点了。
+
+- 第二步：如果不为空，那么取后序数组最后一个元素作为节点元素(后序为左右中，最后一个元素一定是root)。
+
+- 第三步：找到后序数组最后一个元素在中序数组的位置，作为切割点
+
+- 第四步：切割中序数组，切成中序左数组和中序右数组 （顺序别搞反了，一定是先切中序数组）
+
+- 第五步：切割后序数组，切成后序左数组和后序右数组
+
+- 第六步：递归处理左区间和右区间
+
+
+```
+var buildTree = function(inorder, postorder) {
+    if(!inorder.length) return null;
+    const rootVal = postorder.pop();
+    const rootIndex = inorder.indexOf(rootVal);
+    const root = new TreeNode(rootVal);
+    root.left = buildTree(inorder.slice(0, rootIndex), postorder.slice(0, rootIndex));
+    root.right = buildTree(inorder.slice(rootIndex + 1), postorder.slice(rootIndex));
+    return root;
+};
+```
+
+
+#### 🔹Question 从前序与中序遍历序列构造二叉树: Leetcode_105
+
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+```
+var buildTree = function(preorder, inorder) {
+    if(!preorder.length) return null;
+    const rootVal = preorder.shift();
+    const rootIndex = inorder.indexOf(rootVal);
+    const root = new TreeNode(rootVal);
+    root.left = buildTree(
+        preorder.slice(0, rootIndex), 
+        inorder.slice(0, rootIndex)       
+    );
+    root.right = buildTree(
+        preorder.slice(rootIndex),   
+        inorder.slice(rootIndex + 1)      
+    );
+
+    return root;
+};
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
 #### 🔹Question 翻转二叉树: Leetcode_226
 
 Given the root of a binary tree, invert the tree, and return its root.
@@ -417,156 +593,6 @@ var pathSum = function(root, targetSum) {
     }
     return res;
 };
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
 ```
 
 ---
