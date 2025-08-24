@@ -106,8 +106,6 @@ Return the merged tree.
 - 同时没有root1，root2；
 - 同时有root1，root2；
 
-#### Method1: DFS递归
-
 ```
 var mergeTrees = function(root1, root2) {
     const DFS = function(node1, node2) {
@@ -122,86 +120,161 @@ var mergeTrees = function(root1, root2) {
 };
 ```
 
-#### Method2: DFS迭代
+#### 🔹Question 二叉搜索树中的搜索: Leetcode_700
+
+You are given the root of a binary search tree (BST) and an integer val.
+Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.
+
+**Key Points**
+
+二叉搜索树是一个有序树：
+
+- 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+- 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+- 它的左、右子树也分别为二叉搜索树
+
+因此历遍时可以利用这个特性，大于目标值左树历遍，小于时历遍右树；
 
 ```
-
+var searchBST = function(root, val) {
+    const DFS = function(node,val) {
+        if(!node || node.val == val) return node;
+        if(node.val > val) return DFS(node.left, val);
+        if(node.val < val) return DFS(node.right, val);
+        return node;
+    }
+    return DFS(root,val);
+};
 ```
 
-#### 🔹Question : Leetcode_
 
 
-#### Method1: DFS递归
+#### 🔹Question 验证二叉搜索树: Leetcode_98
 
-```
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
 
-```
+A valid BST is defined as follows:
 
-#### Method2: DFS迭代
+The left subtree of a node contains only nodes with keys strictly less than the node's key.
+The right subtree of a node contains only nodes with keys strictly greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
 
-```
+**Key Points**
 
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
+- 中序是最好的解决方案，因为：左<中<右；
+- DFS中序历遍后压栈到数组中，检查数组是否始终保证前一个值小于后一个值；
 
 ```
-
+var isValidBST = function(root) {
+    let arr = [];
+    const DFS = function(node){
+        if(node) {
+            DFS(node.left);
+            arr.push(node.val);
+            DFS(node.right);
+        }
+    }
+    DFS(root);
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i] <= arr[i - 1]) return false;
+    }
+    return true;
+};
 ```
 
-#### Method2: DFS迭代
+#### 🔹Question 二叉搜索树的最小绝对差: Leetcode_530
+
+Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+
+**Key Points**
+
+中序递归，转换为有序数组
 
 ```
+var getMinimumDifference = function(root) {
+    let arr = [];
+    const DFS = function(node) {
+        if(!node) return;
+        if(node) {
+            DFS(node.left);
+            arr.push(node.val);
+            DFS(node.right);
+        }
+    }
+    DFS(root);
 
+    let minDiff = Infinity;
+    for(let i = 1; i < arr.length; i++) {
+        minDiff = Math.min(minDiff, arr[i] - arr[i - 1]);
+    }
+    return minDiff;
+    }
+    
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 二叉搜索树中的众数: Leetcode_501
 
+Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it.
 
-#### Method1: DFS递归
+If the tree has more than one mode, return them in any order.
 
-```
+Assume a BST is defined as follows:
 
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
+The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+Both the left and right subtrees must also be binary search trees.
 
 ```
+var findMode = function(root) {
+    let res = [];
+    let count = 0, maxCount = 1;
+    let pre = null;
+    const DFS = function(node) {
+        if(!node) return;
+        DFS(node.left); //左
 
+        if(pre && pre.val === node.val) {
+            count++;
+        } else {
+            count = 1;
+        }
+        pre = node;
+
+        if(count === maxCount){
+            res.push(node.val);
+        } else if(count > maxCount) {
+            maxCount = count;
+            res = [node.val];
+        }
+        
+        DFS(node.right); //右
+    }
+    DFS(root);
+    return res;
+};
 ```
 
-#### Method2: DFS迭代
+#### 🔹Question 二叉树的最近公共祖先: Leetcode_236
+
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
 
 ```
-
+var lowestCommonAncestor = function(root, p, q) {
+    const DFS = function(node, p, q) {
+        if(!node || node === p || node === q) return node;
+        let left = DFS(node.left, p, q);
+        let right = DFS(node.right, p, q);
+        if(left && right) return node;
+        if(!left) return right;
+        if(!right) return left;
+    }
+    return DFS(root, p, q);
+};
 ```
 
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
 
 #### 🔹Question : Leetcode_
 
