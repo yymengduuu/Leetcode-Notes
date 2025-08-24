@@ -91,13 +91,35 @@ var constructMaximumBinaryTree = function(nums) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 合并二叉树: Leetcode_617
 
+You are given two binary trees root1 and root2.
+Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of the new tree.
+Return the merged tree.
+
+**Key Points**
+
+遍历是同步进行的，因此只需要分四个情况考虑：
+
+- 没有root1；
+- 没有root2；
+- 同时没有root1，root2；
+- 同时有root1，root2；
 
 #### Method1: DFS递归
 
 ```
-
+var mergeTrees = function(root1, root2) {
+    const DFS = function(node1, node2) {
+        if(!node1) return node2;
+        if(!node2) return node1;
+        node1.val += node2.val;
+        node1.left = DFS(node1.left, node2.left);
+        node1.right = DFS(node1.right, node2.right);
+        return node1;
+    }
+    return DFS(root1, root2);
+};
 ```
 
 #### Method2: DFS迭代
