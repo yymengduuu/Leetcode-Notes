@@ -1,8 +1,138 @@
-代码随想录算法训练营第十八天
+代码随想录算法训练营第二十天
 
 # Binary Tree
 
 ### Related Questions
+
+#### 🔹Question 二叉搜索树的最近公共祖先: Leetcode_235
+
+Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+**Key Points**
+
+类似于234，二叉树的公共祖先。不同点在于可以利用二叉搜索树特性，左树<root，右树>root；
+
+#### Method1: DFS递归
+
+```
+var lowestCommonAncestor = function(root, p, q) {
+    const DFS = function(node, p, q) {
+        if(!node) return;
+        if(node.val > p.val && node.val > q.val) {
+            return node.left = DFS(node.left, p, q);
+        }
+        if(node.val < p.val && node.val < q.val) {
+            return node.right = DFS(node.right, p, q);
+        }
+        return node;
+    }
+    return DFS(root, p, q);
+};
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+#### Method1: DFS递归
+
+```
+
+```
+
+#### Method2: DFS迭代
+
+```
+
+```
+
 
 #### 🔹Question 从中序与后序遍历序列构造二叉树: Leetcode_106
 
@@ -274,23 +404,6 @@ var lowestCommonAncestor = function(root, p, q) {
     return DFS(root, p, q);
 };
 ```
-
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
 
 #### 🔹Question 翻转二叉树: Leetcode_226
 
