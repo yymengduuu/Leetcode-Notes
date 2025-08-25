@@ -50,29 +50,86 @@ var lowestCommonAncestor = function(root, p, q) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 二叉搜索树中的插入操作: Leetcode_701
 
+You are given the root node of a binary search tree (BST) and a value to insert into the tree. Return the root node of the BST after the insertion. It is guaranteed that the new value does not exist in the original BST.
+
+Notice that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return any of them.
+
+
+```
+var insertIntoBST = function(root, val) {
+    const DFS = function(node, val) {
+        if (node === null) {
+            // 在 null 的地方创建新节点
+            let node = new TreeNode(val);
+            return node;
+            }
+        if(node.val > val) {
+            node.left = DFS(node.left, val);
+        }
+        if(node.val < val) {
+            node.right = DFS(node.right, val);
+        }
+        return node;
+    }
+    return DFS(root, val);
+};
+```
+
+
+#### 🔹Question 删除二叉搜索树中的节点: Leetcode_450
+
+Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
+
+Basically, the deletion can be divided into two stages:
+
+Search for a node to remove.
+If the node is found, delete the node.
+
+**Key Points**
+
+有以下五种情况：
+
+- 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+找到删除的节点
+- 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+- 第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点
+- 第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+- 第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
 
 #### Method1: DFS递归
 
 ```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
+var deleteNode = function(root, key) {
+    const DFS = function(node, key) {
+        if(!node) return null;
+        if(node.val > key) {
+            node.left = DFS(node.left, key);
+            return node;
+        } else if(node.val < key) {
+            node.right = DFS(node.right, key);
+            return node;
+        } else {
+            if(!node.left && !node.right) {
+                return null;
+                } else if(!node.left) {
+                    return node.right;
+                } else if(!node.right){
+                    return node.left;
+                } else {
+                    let rightNode = node.right;
+                    while(rightNode.left){
+                        rightNode = rightNode.left;
+                    }
+                    node.val = rightNode.val;
+                    node.right = DFS(node.right, rightNode.val)
+                    return node; 
+                }
+        }
+    }
+    return DFS(root, key);
+};
 ```
 
 #### Method2: DFS迭代
