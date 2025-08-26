@@ -2,536 +2,168 @@
 
 # Binary Tree
 
-### Related Questions
+## 二叉树
 
-#### 🔹Question 二叉搜索树的最近公共祖先: Leetcode_235
+### 二叉树的属性
 
-Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
+#### 🔹Question 完全二叉树的节点个数: Leetcode_222
 
-According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
-
-**Key Points**
-
-类似于234，二叉树的公共祖先。不同点在于可以利用二叉搜索树特性，左树<root，右树>root；
+Given the root of a complete binary tree, return the number of the nodes in the tree.
+According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+Design an algorithm that runs in less than O(n) time complexity.
 
 #### Method1: DFS递归
 
 ```
-var lowestCommonAncestor = function(root, p, q) {
-    const DFS = function(node, p, q) {
-        if(!node) return;
-        if(node.val > p.val && node.val > q.val) {
-            return node.left = DFS(node.left, p, q);
-        }
-        if(node.val < p.val && node.val < q.val) {
-            return node.right = DFS(node.right, p, q);
-        }
-        return node;
+var countNodes = function(root) {
+    const getNodeSum = function(node) {
+        if(!node) return 0;       
+        let leftSum = getNodeSum(node.left);
+        let rightSum = getNodeSum(node.right);
+        return leftSum + rightSum + 1;
     }
-    return DFS(root, p, q);
-};
-```
-
-#### Method2: DFS迭代
-
-```
-var lowestCommonAncestor = function(root, p, q) {
-    while(root) {
-        if(!root) return;
-        if(root.val > p.val && root.val > q.val) {
-            root = root.left;
-        } else if(root.val < p.val && root.val < q.val) {
-            root = root.right;
-        } else{
-            return root;
-        }
-    }
-    return null;
-};
-```
-
-#### 🔹Question 二叉搜索树中的插入操作: Leetcode_701
-
-You are given the root node of a binary search tree (BST) and a value to insert into the tree. Return the root node of the BST after the insertion. It is guaranteed that the new value does not exist in the original BST.
-
-Notice that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return any of them.
-
-
-```
-var insertIntoBST = function(root, val) {
-    const DFS = function(node, val) {
-        if (node === null) {
-            // 在 null 的地方创建新节点
-            let node = new TreeNode(val);
-            return node;
-            }
-        if(node.val > val) {
-            node.left = DFS(node.left, val);
-        }
-        if(node.val < val) {
-            node.right = DFS(node.right, val);
-        }
-        return node;
-    }
-    return DFS(root, val);
-};
-```
-
-
-#### 🔹Question 删除二叉搜索树中的节点: Leetcode_450
-
-Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
-
-Basically, the deletion can be divided into two stages:
-
-Search for a node to remove.
-If the node is found, delete the node.
-
-**Key Points**
-
-有以下五种情况：
-
-- 第一种情况：没找到删除的节点，遍历到空节点直接返回了
-找到删除的节点
-- 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
-- 第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点
-- 第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
-- 第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
-
-#### Method1: DFS递归
-
-```
-var deleteNode = function(root, key) {
-    const DFS = function(node, key) {
-        // 情况1
-        if(!node) return null;
-        // 情况2
-        if(node.val > key) {
-            node.left = DFS(node.left, key);
-            return node;
-        } else if(node.val < key) {
-            node.right = DFS(node.right, key);
-            return node;
-        } else {
-            // 情况3
-            if(!node.left && !node.right) {
-                return null;
-                // 情况4
-                } else if(!node.left) {
-                    return node.right;
-                } else if(!node.right){
-                    return node.left;
-                // 情况5
-                } else {
-                    let rightNode = node.right;
-                    while(rightNode.left){
-                        rightNode = rightNode.left;
-                    }
-                    node.val = rightNode.val;
-                    node.right = DFS(node.right, rightNode.val)
-                    return node; 
-                }
-        }
-    }
-    return DFS(root, key);
-};
-```
-
-
-#### 🔹Question 修剪二叉搜索树: Leetcode_669
-
-Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high]. Trimming the tree should not change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a unique answer.
-
-Return the root of the trimmed binary search tree. Note that the root may change depending on the given bounds.
-
-**Key Points**
-
-利用BST的有序性：左子树所有值 < root.val，右子树所有值 > root.val。
-
-```
-var trimBST = function(root, low, high) {
-    const DFS = function(node, low, high) {
-        if(!node) return null;
-        if(node.val < low) {
-            return DFS(node.right, low, high);
-        }
-        if(node.val > high) {
-            return DFS(node.left, low, high);
-        }
-        node.left = DFS(node.left, low, high);
-        node.right = DFS(node.right, low, high);
-        return node;
-    }
-    return DFS(root, low, high);
-};
-```
-
-
-#### 🔹Question 将有序数组转换为二叉搜索树: Leetcode_108
-
-Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
-
-**Key Points**
-
-分割点就是数组中间位置的节点,分割点左边为左树，右边为右树；
-
-
-```
-var sortedArrayToBST = function(nums) {
-    const DFS = function(nums, left, right) {
-        if(left > right) return null;
-        let mid = Math.floor((left + right) / 2);
-        const root = new TreeNode(nums[mid]);
-        root.left = DFS(nums, left, mid - 1);
-        root.right = DFS(nums, mid + 1, right);
-        return root;
-    }
-    return DFS(nums, 0, nums.length - 1);
-};
-```
-
-
-#### 🔹Question 把二叉搜索树转换为累加树: Leetcode_538
-
-Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.
-
-As a reminder, a binary search tree is a tree that satisfies these constraints:
-
-The left subtree of a node contains only nodes with keys less than the node's key.
-The right subtree of a node contains only nodes with keys greater than the node's key.
-Both the left and right subtrees must also be binary search trees.
-
-**Key Points**
-
-反中序遍历得到降序数组，实现累加比当前大的数
-
-
-```
-var convertBST = function(root) {
-    let pre = 0;
-    const DFS = function(node) {
-        if(!node) return null;
-        DFS(node.right);
-        node.val += pre;
-        pre = node.val;
-        DFS(node.left);
-        return node;
-    }
-
-    return DFS(root);
-};
-```
-
-
-#### 🔹Question 从中序与后序遍历序列构造二叉树: Leetcode_106
-
-Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
-
-**Key Points**
-
-- 第一步：如果数组大小为零的话，说明是空节点了。
-
-- 第二步：如果不为空，那么取后序数组最后一个元素作为节点元素(后序为左右中，最后一个元素一定是root)。
-
-- 第三步：找到后序数组最后一个元素在中序数组的位置，作为切割点
-
-- 第四步：切割中序数组，切成中序左数组和中序右数组 （顺序别搞反了，一定是先切中序数组）
-
-- 第五步：切割后序数组，切成后序左数组和后序右数组
-
-- 第六步：递归处理左区间和右区间
-
-
-```
-var buildTree = function(inorder, postorder) {
-    if(!inorder.length) return null;
-    const rootVal = postorder.pop();
-    const rootIndex = inorder.indexOf(rootVal);
-    const root = new TreeNode(rootVal);
-    root.left = buildTree(inorder.slice(0, rootIndex), postorder.slice(0, rootIndex));
-    root.right = buildTree(inorder.slice(rootIndex + 1), postorder.slice(rootIndex));
-    return root;
-};
-```
-
-
-#### 🔹Question 从前序与中序遍历序列构造二叉树: Leetcode_105
-
-Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
-
-```
-var buildTree = function(preorder, inorder) {
-    if(!preorder.length) return null;
-    const rootVal = preorder.shift();
-    const rootIndex = inorder.indexOf(rootVal);
-    const root = new TreeNode(rootVal);
-    root.left = buildTree(
-        preorder.slice(0, rootIndex), 
-        inorder.slice(0, rootIndex)       
-    );
-    root.right = buildTree(
-        preorder.slice(rootIndex),   
-        inorder.slice(rootIndex + 1)      
-    );
-
-    return root;
-};
-```
-
-#### 🔹Question 最大二叉树: Leetcode_654
-
-You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
-
-Create a root node whose value is the maximum value in nums.
-Recursively build the left subtree on the subarray prefix to the left of the maximum value.
-Recursively build the right subtree on the subarray suffix to the right of the maximum value.
-Return the maximum binary tree built from nums.
-
-```
-var constructMaximumBinaryTree = function(nums) {
-    const buildTree = function(left, right, arr) {
-        if(left > right) return null;
-        let maxValue = -1;
-        let maxIndex = -1;
-        for(let i = left; i <= right; i++) {
-            if(arr[i] > maxValue) {
-                maxValue = arr[i];
-                maxIndex = i;
-            }
-        }
-
-        let root = new TreeNode(maxValue);
-        root.left = buildTree(left, maxIndex - 1, arr);
-        root.right = buildTree(maxIndex + 1, right, arr);
-        return root;
-    }
-    root = buildTree(0, nums.length - 1, nums);
-    return root;
-};
-```
-
-#### 🔹Question 合并二叉树: Leetcode_617
-
-You are given two binary trees root1 and root2.
-Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of the new tree.
-Return the merged tree.
-
-**Key Points**
-
-遍历是同步进行的，因此只需要分四个情况考虑：
-
-- 没有root1；
-- 没有root2；
-- 同时没有root1，root2；
-- 同时有root1，root2；
-
-```
-var mergeTrees = function(root1, root2) {
-    const DFS = function(node1, node2) {
-        if(!node1) return node2;
-        if(!node2) return node1;
-        node1.val += node2.val;
-        node1.left = DFS(node1.left, node2.left);
-        node1.right = DFS(node1.right, node2.right);
-        return node1;
-    }
-    return DFS(root1, root2);
-};
-```
-
-#### 🔹Question 二叉搜索树中的搜索: Leetcode_700
-
-You are given the root of a binary search tree (BST) and an integer val.
-Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.
-
-**Key Points**
-
-二叉搜索树是一个有序树：
-
-- 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
-- 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
-- 它的左、右子树也分别为二叉搜索树
-
-因此历遍时可以利用这个特性，大于目标值左树历遍，小于时历遍右树；
-
-```
-var searchBST = function(root, val) {
-    const DFS = function(node,val) {
-        if(!node || node.val == val) return node;
-        if(node.val > val) return DFS(node.left, val);
-        if(node.val < val) return DFS(node.right, val);
-        return node;
-    }
-    return DFS(root,val);
-};
-```
-
-
-
-#### 🔹Question 验证二叉搜索树: Leetcode_98
-
-Given the root of a binary tree, determine if it is a valid binary search tree (BST).
-
-A valid BST is defined as follows:
-
-The left subtree of a node contains only nodes with keys strictly less than the node's key.
-The right subtree of a node contains only nodes with keys strictly greater than the node's key.
-Both the left and right subtrees must also be binary search trees.
-
-**Key Points**
-
-- 中序是最好的解决方案，因为：左<中<右；
-- DFS中序历遍后压栈到数组中，检查数组是否始终保证前一个值小于后一个值；
-
-```
-var isValidBST = function(root) {
-    let arr = [];
-    const DFS = function(node){
-        if(node) {
-            DFS(node.left);
-            arr.push(node.val);
-            DFS(node.right);
-        }
-    }
-    DFS(root);
-    for(let i = 0; i < arr.length; i++) {
-        if(arr[i] <= arr[i - 1]) return false;
-    }
-    return true;
-};
-```
-
-#### 🔹Question 二叉搜索树的最小绝对差: Leetcode_530
-
-Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
-
-**Key Points**
-
-中序递归，转换为有序数组
-
-```
-var getMinimumDifference = function(root) {
-    let arr = [];
-    const DFS = function(node) {
-        if(!node) return;
-        if(node) {
-            DFS(node.left);
-            arr.push(node.val);
-            DFS(node.right);
-        }
-    }
-    DFS(root);
-
-    let minDiff = Infinity;
-    for(let i = 1; i < arr.length; i++) {
-        minDiff = Math.min(minDiff, arr[i] - arr[i - 1]);
-    }
-    return minDiff;
-    }
-    
-```
-
-#### 🔹Question 二叉搜索树中的众数: Leetcode_501
-
-Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it.
-
-If the tree has more than one mode, return them in any order.
-
-Assume a BST is defined as follows:
-
-The left subtree of a node contains only nodes with keys less than or equal to the node's key.
-The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
-Both the left and right subtrees must also be binary search trees.
-
-```
-var findMode = function(root) {
-    let res = [];
-    let count = 0, maxCount = 1;
-    let pre = null;
-    const DFS = function(node) {
-        if(!node) return;
-        DFS(node.left); //左
-
-        if(pre && pre.val === node.val) {
-            count++;
-        } else {
-            count = 1;
-        }
-        pre = node;
-
-        if(count === maxCount){
-            res.push(node.val);
-        } else if(count > maxCount) {
-            maxCount = count;
-            res = [node.val];
-        }
-        
-        DFS(node.right); //右
-    }
-    DFS(root);
-    return res;
-};
-```
-
-#### 🔹Question 二叉树的最近公共祖先: Leetcode_236
-
-Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
-
-According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
-
-
-```
-var lowestCommonAncestor = function(root, p, q) {
-    const DFS = function(node, p, q) {
-        if(!node || node === p || node === q) return node;
-        let left = DFS(node.left, p, q);
-        let right = DFS(node.right, p, q);
-        if(left && right) return node;
-        if(!left) return right;
-        if(!right) return left;
-    }
-    return DFS(root, p, q);
-};
-```
-
-#### 🔹Question 翻转二叉树: Leetcode_226
-
-Given the root of a binary tree, invert the tree, and return its root.
-
-**Key Points**
-
-核心思想就是需要用temp暂时记录root.left或root.right的值，然后进行交换；
-
-#### Method1: DFS递归
-
-```
-var invertTree = function(root) {
-    if(root === null) return root;
-    const tem = root.right;
-    root.right = invertTree(root.left);
-    root.left = invertTree(tem);
-    return root;
+    return getNodeSum(root);
 };
 ```
 
 #### Method2: BFS层序
 
 ```
-var invertTree = function(root) {
-    if(root === null) return root;
+var countNodes = function(root) {
+    if(!root) return 0;
     let queue = [root];
-    while (queue.length) {
+    let sum = 0;
+    while(queue.length) {
         let size = queue.length;
-        for (let i = 0; i < size; i++ ) {
-            let node = queue.shift();
-            let tem = node.left;
-            node.left = node.right;
-            node.right = tem;
+        for (let i = 0; i < size; i++) {
+            let node = queue.pop();
+            sum += 1;
             node.left && queue.push(node.left);
             node.right && queue.push(node.right);
         }
+    }  
+    return sum; 
+};
+```
+
+#### 🔹Question 路径总和: Leetcode_112
+
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+A leaf is a node with no children.
+
+#### Method1: DFS递归
+
+```
+var hasPathSum = function(root, targetSum) {
+    
+    const travelsal = function(node,count) {
+        if(count === 0 && !node.left && !node.right) return true; 
+        // 在叶子节点判断是否满足条件，满足才进入递归
+        if(!node.left && !node.right) return false; 
+        // 到叶子但没凑够条件，终止
+
+        if(node.left && travelsal(node.left, count - node.left.val)) return true;
+        if(node.right && travelsal(node.right, count - node.right.val)) return true;
+        return false;
+        // 递归的兜底出口，保证所有路径都走完没找到，就明确告诉上层没有符合条件的路径
     }
-    return root;
+    if(!root) return false;
+    return travelsal(root, targetSum - root.val);
+};
+```
+
+#### Method2: BFS迭代
+
+```
+var hasPathSum = function(root, targetSum) {
+    if(!root) return false;
+    let queue = [root];
+    let valueQ = [0];
+    while(queue.length) {
+        let node = queue.shift();
+        let val = valueQ.shift();
+        val += node.val;
+        if (!node.left && !node.right && targetSum === val) return true;
+        if (node.left) {
+            queue.push(node.left);
+            valueQ.push(val);
+        }
+        if (node.right) {
+            queue.push(node.right);
+            valueQ.push(val);
+        }
+    }
+    return false;
+};
+```
+
+#### 🔹Question 路径总和2: Leetcode_113
+
+Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
+
+#### Method1: DFS递归
+
+```
+var pathSum = function(root, targetSum) {
+    const res = [];
+    let path = [];
+    const traversal = function(node, cnt) {
+        path.push(node.val);
+        if(cnt === 0 && !node.left && !node.right){
+            res.push([...path]);
+            path.pop();
+            return;
+        }
+        if(!node.left && !node.right) {
+            path.pop();
+            return;
+        }
+        if(node.left) {
+            traversal(node.left, cnt - node.left.val);
+        }
+        if(node.right) {
+            traversal(node.right, cnt - node.right.val);
+        }
+        path.pop();
+        return;
+    }
+    if(!root) return [];
+    traversal(root, targetSum - root.val);
+    return res;
+};
+```
+
+#### Method2: DFS迭代
+
+```
+var pathSum = function(root, targetSum) {
+    let res = [];
+    if(!root) return res;
+    let queue = [root];
+    let valueQ = [root.val];
+    let pathQ = [[root.val]];
+
+    while(queue.length) {
+        let node = queue.shift();
+        let value = valueQ.shift();
+        let path = pathQ.shift();
+
+        if (!node.left && !node.right && targetSum === value) {
+            res.push(path);
+        }
+        if (node.left) {
+            queue.push(node.left);
+            valueQ.push(value + node.left.val);
+            pathQ.push([...path, node.left.val]);
+        }
+        if (node.right) {
+            queue.push(node.right);
+            valueQ.push(value + node.right.val);
+            pathQ.push([...path, node.right.val]);
+        }
+    }
+    return res;
 };
 ```
 
@@ -718,7 +350,6 @@ var binaryTreePaths = function(root) {
 };
 ```
 
-
 #### 🔹Question 左叶子之和: Leetcode_404
 
 Given the root of a binary tree, return the sum of all left leaves.
@@ -746,166 +377,548 @@ var sumOfLeftLeaves = function(root) {
     return getLeftLeaf(root);
 };
 ```
+---
 
+## 二叉树的修改与构造
 
-#### 🔹Question 完全二叉树的节点个数: Leetcode_222
+#### 🔹Question 翻转二叉树: Leetcode_226
 
-Given the root of a complete binary tree, return the number of the nodes in the tree.
-According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
-Design an algorithm that runs in less than O(n) time complexity.
+Given the root of a binary tree, invert the tree, and return its root.
+
+**Key Points**
+
+核心思想就是需要用temp暂时记录root.left或root.right的值，然后进行交换；
 
 #### Method1: DFS递归
 
 ```
-var countNodes = function(root) {
-    const getNodeSum = function(node) {
-        if(!node) return 0;       
-        let leftSum = getNodeSum(node.left);
-        let rightSum = getNodeSum(node.right);
-        return leftSum + rightSum + 1;
-    }
-    return getNodeSum(root);
+var invertTree = function(root) {
+    if(root === null) return root;
+    const tem = root.right;
+    root.right = invertTree(root.left);
+    root.left = invertTree(tem);
+    return root;
 };
 ```
 
 #### Method2: BFS层序
 
 ```
-var countNodes = function(root) {
-    if(!root) return 0;
+var invertTree = function(root) {
+    if(root === null) return root;
     let queue = [root];
-    let sum = 0;
-    while(queue.length) {
+    while (queue.length) {
         let size = queue.length;
-        for (let i = 0; i < size; i++) {
-            let node = queue.pop();
-            sum += 1;
+        for (let i = 0; i < size; i++ ) {
+            let node = queue.shift();
+            let tem = node.left;
+            node.left = node.right;
+            node.right = tem;
             node.left && queue.push(node.left);
             node.right && queue.push(node.right);
         }
-    }  
-    return sum; 
+    }
+    return root;
 };
 ```
 
-#### 🔹Question 路径总和: Leetcode_112
+#### 🔹Question 构建最大二叉树: Leetcode_654
 
-Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
-A leaf is a node with no children.
+You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
+
+Create a root node whose value is the maximum value in nums.
+Recursively build the left subtree on the subarray prefix to the left of the maximum value.
+Recursively build the right subtree on the subarray suffix to the right of the maximum value.
+Return the maximum binary tree built from nums.
+
+```
+var constructMaximumBinaryTree = function(nums) {
+    const buildTree = function(left, right, arr) {
+        if(left > right) return null;
+        let maxValue = -1;
+        let maxIndex = -1;
+        for(let i = left; i <= right; i++) {
+            if(arr[i] > maxValue) {
+                maxValue = arr[i];
+                maxIndex = i;
+            }
+        }
+
+        let root = new TreeNode(maxValue);
+        root.left = buildTree(left, maxIndex - 1, arr);
+        root.right = buildTree(maxIndex + 1, right, arr);
+        return root;
+    }
+    root = buildTree(0, nums.length - 1, nums);
+    return root;
+};
+```
+
+
+#### 🔹Question 合并二叉树: Leetcode_617
+
+You are given two binary trees root1 and root2.
+Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of the new tree.
+Return the merged tree.
+
+**Key Points**
+
+遍历是同步进行的，因此只需要分四个情况考虑：
+
+- 没有root1；
+- 没有root2；
+- 同时没有root1，root2；
+- 同时有root1，root2；
+
+```
+var mergeTrees = function(root1, root2) {
+    const DFS = function(node1, node2) {
+        if(!node1) return node2;
+        if(!node2) return node1;
+        node1.val += node2.val;
+        node1.left = DFS(node1.left, node2.left);
+        node1.right = DFS(node1.right, node2.right);
+        return node1;
+    }
+    return DFS(root1, root2);
+};
+```
+
+#### 🔹Question 从中序与后序遍历序列构造二叉树: Leetcode_106
+
+Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
+
+**Key Points**
+
+- 第一步：如果数组大小为零的话，说明是空节点了。
+
+- 第二步：如果不为空，那么取后序数组最后一个元素作为节点元素(后序为左右中，最后一个元素一定是root)。
+
+- 第三步：找到后序数组最后一个元素在中序数组的位置，作为切割点
+
+- 第四步：切割中序数组，切成中序左数组和中序右数组 （顺序别搞反了，一定是先切中序数组）
+
+- 第五步：切割后序数组，切成后序左数组和后序右数组
+
+- 第六步：递归处理左区间和右区间
+
+
+```
+var buildTree = function(inorder, postorder) {
+    if(!inorder.length) return null;
+    const rootVal = postorder.pop();
+    const rootIndex = inorder.indexOf(rootVal);
+    const root = new TreeNode(rootVal);
+    root.left = buildTree(inorder.slice(0, rootIndex), postorder.slice(0, rootIndex));
+    root.right = buildTree(inorder.slice(rootIndex + 1), postorder.slice(rootIndex));
+    return root;
+};
+```
+
+#### 🔹Question 从前序与中序遍历序列构造二叉树: Leetcode_105
+
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+```
+var buildTree = function(preorder, inorder) {
+    if(!preorder.length) return null;
+    const rootVal = preorder.shift();
+    const rootIndex = inorder.indexOf(rootVal);
+    const root = new TreeNode(rootVal);
+    root.left = buildTree(
+        preorder.slice(0, rootIndex), 
+        inorder.slice(0, rootIndex)       
+    );
+    root.right = buildTree(
+        preorder.slice(rootIndex),   
+        inorder.slice(rootIndex + 1)      
+    );
+
+    return root;
+};
+```
+
+### 二叉树公共祖先问题
+
+### Related Questions
+
+#### 🔹Question 二叉树的最近公共祖先: Leetcode_236
+
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+
+```
+var lowestCommonAncestor = function(root, p, q) {
+    const DFS = function(node, p, q) {
+        if(!node || node === p || node === q) return node;
+        let left = DFS(node.left, p, q);
+        let right = DFS(node.right, p, q);
+        if(left && right) return node;
+        if(!left) return right;
+        if(!right) return left;
+    }
+    return DFS(root, p, q);
+};
+```
+
+#### 🔹Question 二叉搜索树的最近公共祖先: Leetcode_235
+
+Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+**Key Points**
+
+类似于236，二叉树的公共祖先。不同点在于可以利用二叉搜索树特性，左树<root，右树>root；
 
 #### Method1: DFS递归
 
 ```
-var hasPathSum = function(root, targetSum) {
-    
-    const travelsal = function(node,count) {
-        if(count === 0 && !node.left && !node.right) return true; 
-        // 在叶子节点判断是否满足条件，满足才进入递归
-        if(!node.left && !node.right) return false; 
-        // 到叶子但没凑够条件，终止
-
-        if(node.left && travelsal(node.left, count - node.left.val)) return true;
-        if(node.right && travelsal(node.right, count - node.right.val)) return true;
-        return false;
-        // 递归的兜底出口，保证所有路径都走完没找到，就明确告诉上层没有符合条件的路径
+var lowestCommonAncestor = function(root, p, q) {
+    const DFS = function(node, p, q) {
+        if(!node) return;
+        if(node.val > p.val && node.val > q.val) {
+            return node.left = DFS(node.left, p, q);
+        }
+        if(node.val < p.val && node.val < q.val) {
+            return node.right = DFS(node.right, p, q);
+        }
+        return node;
     }
-    if(!root) return false;
-    return travelsal(root, targetSum - root.val);
-};
-```
-
-#### Method2: BFS迭代
-
-```
-var hasPathSum = function(root, targetSum) {
-    if(!root) return false;
-    let queue = [root];
-    let valueQ = [0];
-    while(queue.length) {
-        let node = queue.shift();
-        let val = valueQ.shift();
-        val += node.val;
-        if (!node.left && !node.right && targetSum === val) return true;
-        if (node.left) {
-            queue.push(node.left);
-            valueQ.push(val);
-        }
-        if (node.right) {
-            queue.push(node.right);
-            valueQ.push(val);
-        }
-    }
-    return false;
-};
-```
-
-#### 🔹Question : Leetcode_113
-
-Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
-A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
-
-#### Method1: DFS递归
-
-```
-var pathSum = function(root, targetSum) {
-    const res = [];
-    let path = [];
-    const traversal = function(node, cnt) {
-        path.push(node.val);
-        if(cnt === 0 && !node.left && !node.right){
-            res.push([...path]);
-            path.pop();
-            return;
-        }
-        if(!node.left && !node.right) {
-            path.pop();
-            return;
-        }
-        if(node.left) {
-            traversal(node.left, cnt - node.left.val);
-        }
-        if(node.right) {
-            traversal(node.right, cnt - node.right.val);
-        }
-        path.pop();
-        return;
-    }
-    if(!root) return [];
-    traversal(root, targetSum - root.val);
-    return res;
+    return DFS(root, p, q);
 };
 ```
 
 #### Method2: DFS迭代
 
 ```
-var pathSum = function(root, targetSum) {
-    let res = [];
-    if(!root) return res;
-    let queue = [root];
-    let valueQ = [root.val];
-    let pathQ = [[root.val]];
-
-    while(queue.length) {
-        let node = queue.shift();
-        let value = valueQ.shift();
-        let path = pathQ.shift();
-
-        if (!node.left && !node.right && targetSum === value) {
-            res.push(path);
-        }
-        if (node.left) {
-            queue.push(node.left);
-            valueQ.push(value + node.left.val);
-            pathQ.push([...path, node.left.val]);
-        }
-        if (node.right) {
-            queue.push(node.right);
-            valueQ.push(value + node.right.val);
-            pathQ.push([...path, node.right.val]);
+var lowestCommonAncestor = function(root, p, q) {
+    while(root) {
+        if(!root) return;
+        if(root.val > p.val && root.val > q.val) {
+            root = root.left;
+        } else if(root.val < p.val && root.val < q.val) {
+            root = root.right;
+        } else{
+            return root;
         }
     }
+    return null;
+};
+```
+
+---
+
+## 二叉搜索树
+
+### 二叉搜索树的属性
+
+#### 🔹Question 二叉搜索树中的搜索: Leetcode_700
+
+You are given the root of a binary search tree (BST) and an integer val.
+Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.
+
+**Key Points**
+
+二叉搜索树是一个有序树：
+
+- 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+- 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+- 它的左、右子树也分别为二叉搜索树
+
+因此历遍时可以利用这个特性，大于目标值左树历遍，小于时历遍右树；
+
+```
+var searchBST = function(root, val) {
+    const DFS = function(node,val) {
+        if(!node || node.val == val) return node;
+        if(node.val > val) return DFS(node.left, val);
+        if(node.val < val) return DFS(node.right, val);
+        return node;
+    }
+    return DFS(root,val);
+};
+```
+
+#### 🔹Question 验证二叉搜索树: Leetcode_98
+
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys strictly less than the node's key.
+The right subtree of a node contains only nodes with keys strictly greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+**Key Points**
+
+- 中序是最好的解决方案，因为：左<中<右；
+- DFS中序历遍后压栈到数组中，检查数组是否始终保证前一个值小于后一个值；
+
+```
+var isValidBST = function(root) {
+    let arr = [];
+    const DFS = function(node){
+        if(node) {
+            DFS(node.left);
+            arr.push(node.val);
+            DFS(node.right);
+        }
+    }
+    DFS(root);
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i] <= arr[i - 1]) return false;
+    }
+    return true;
+};
+```
+
+#### 🔹Question 二叉搜索树的最小绝对差: Leetcode_530
+
+Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+
+**Key Points**
+
+中序递归，转换为有序数组
+
+```
+var getMinimumDifference = function(root) {
+    let arr = [];
+    const DFS = function(node) {
+        if(!node) return;
+        if(node) {
+            DFS(node.left);
+            arr.push(node.val);
+            DFS(node.right);
+        }
+    }
+    DFS(root);
+
+    let minDiff = Infinity;
+    for(let i = 1; i < arr.length; i++) {
+        minDiff = Math.min(minDiff, arr[i] - arr[i - 1]);
+    }
+    return minDiff;
+    }
+    
+```
+
+#### 🔹Question 二叉搜索树中的众数: Leetcode_501
+
+Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it.
+
+If the tree has more than one mode, return them in any order.
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+```
+var findMode = function(root) {
+    let res = [];
+    let count = 0, maxCount = 1;
+    let pre = null;
+    const DFS = function(node) {
+        if(!node) return;
+        DFS(node.left); //左
+
+        if(pre && pre.val === node.val) {
+            count++;
+        } else {
+            count = 1;
+        }
+        pre = node;
+
+        if(count === maxCount){
+            res.push(node.val);
+        } else if(count > maxCount) {
+            maxCount = count;
+            res = [node.val];
+        }
+        
+        DFS(node.right); //右
+    }
+    DFS(root);
     return res;
+};
+```
+
+#### 🔹Question 把二叉搜索树转换为累加树: Leetcode_538
+
+Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.
+
+As a reminder, a binary search tree is a tree that satisfies these constraints:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+**Key Points**
+
+反中序遍历得到降序数组，实现累加比当前大的数
+
+
+```
+var convertBST = function(root) {
+    let pre = 0;
+    const DFS = function(node) {
+        if(!node) return null;
+        DFS(node.right);
+        node.val += pre;
+        pre = node.val;
+        DFS(node.left);
+        return node;
+    }
+
+    return DFS(root);
+};
+```
+
+---
+
+
+### 二叉搜索树的修改与构造
+
+#### 🔹Question 将有序数组转换为二叉搜索树: Leetcode_108
+
+Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+**Key Points**
+
+分割点就是数组中间位置的节点,分割点左边为左树，右边为右树；
+
+
+```
+var sortedArrayToBST = function(nums) {
+    const DFS = function(nums, left, right) {
+        if(left > right) return null;
+        let mid = Math.floor((left + right) / 2);
+        const root = new TreeNode(nums[mid]);
+        root.left = DFS(nums, left, mid - 1);
+        root.right = DFS(nums, mid + 1, right);
+        return root;
+    }
+    return DFS(nums, 0, nums.length - 1);
+};
+```
+
+#### 🔹Question 二叉搜索树中的插入操作: Leetcode_701
+
+You are given the root node of a binary search tree (BST) and a value to insert into the tree. Return the root node of the BST after the insertion. It is guaranteed that the new value does not exist in the original BST.
+
+Notice that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return any of them.
+
+
+```
+var insertIntoBST = function(root, val) {
+    const DFS = function(node, val) {
+        if (node === null) {
+            // 在 null 的地方创建新节点
+            let node = new TreeNode(val);
+            return node;
+            }
+        if(node.val > val) {
+            node.left = DFS(node.left, val);
+        }
+        if(node.val < val) {
+            node.right = DFS(node.right, val);
+        }
+        return node;
+    }
+    return DFS(root, val);
+};
+```
+
+
+#### 🔹Question 删除二叉搜索树中的节点: Leetcode_450
+
+Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
+
+Basically, the deletion can be divided into two stages:
+
+Search for a node to remove.
+If the node is found, delete the node.
+
+**Key Points**
+
+有以下五种情况：
+
+- 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+找到删除的节点
+- 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+- 第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点
+- 第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+- 第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。
+
+#### Method1: DFS递归
+
+```
+var deleteNode = function(root, key) {
+    const DFS = function(node, key) {
+        // 情况1
+        if(!node) return null;
+        // 情况2
+        if(node.val > key) {
+            node.left = DFS(node.left, key);
+            return node;
+        } else if(node.val < key) {
+            node.right = DFS(node.right, key);
+            return node;
+        } else {
+            // 情况3
+            if(!node.left && !node.right) {
+                return null;
+                // 情况4
+                } else if(!node.left) {
+                    return node.right;
+                } else if(!node.right){
+                    return node.left;
+                // 情况5
+                } else {
+                    let rightNode = node.right;
+                    while(rightNode.left){
+                        rightNode = rightNode.left;
+                    }
+                    node.val = rightNode.val;
+                    node.right = DFS(node.right, rightNode.val)
+                    return node; 
+                }
+        }
+    }
+    return DFS(root, key);
+};
+```
+
+
+#### 🔹Question 修剪二叉搜索树: Leetcode_669
+
+Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high]. Trimming the tree should not change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a unique answer.
+
+Return the root of the trimmed binary search tree. Note that the root may change depending on the given bounds.
+
+**Key Points**
+
+利用BST的有序性：左子树所有值 < root.val，右子树所有值 > root.val。
+
+```
+var trimBST = function(root, low, high) {
+    const DFS = function(node, low, high) {
+        if(!node) return null;
+        if(node.val < low) {
+            return DFS(node.right, low, high);
+        }
+        if(node.val > high) {
+            return DFS(node.left, low, high);
+        }
+        node.left = DFS(node.left, low, high);
+        node.right = DFS(node.right, low, high);
+        return node;
+    }
+    return DFS(root, low, high);
 };
 ```
 
