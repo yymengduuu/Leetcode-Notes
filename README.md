@@ -1,4 +1,4 @@
-代码随想录算法训练营第二十天
+代码随想录算法训练营第二十一天
 
 # Binary Tree
 
@@ -103,7 +103,9 @@ If the node is found, delete the node.
 ```
 var deleteNode = function(root, key) {
     const DFS = function(node, key) {
+        // 情况1
         if(!node) return null;
+        // 情况2
         if(node.val > key) {
             node.left = DFS(node.left, key);
             return node;
@@ -111,12 +113,15 @@ var deleteNode = function(root, key) {
             node.right = DFS(node.right, key);
             return node;
         } else {
+            // 情况3
             if(!node.left && !node.right) {
                 return null;
+                // 情况4
                 } else if(!node.left) {
                     return node.right;
                 } else if(!node.right){
                     return node.left;
+                // 情况5
                 } else {
                     let rightNode = node.right;
                     while(rightNode.left){
@@ -132,74 +137,89 @@ var deleteNode = function(root, key) {
 };
 ```
 
-#### Method2: DFS迭代
+
+#### 🔹Question 修剪二叉搜索树: Leetcode_669
+
+Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high]. Trimming the tree should not change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a unique answer.
+
+Return the root of the trimmed binary search tree. Note that the root may change depending on the given bounds.
+
+**Key Points**
+
+利用BST的有序性：左子树所有值 < root.val，右子树所有值 > root.val。
 
 ```
-
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
+var trimBST = function(root, low, high) {
+    const DFS = function(node, low, high) {
+        if(!node) return null;
+        if(node.val < low) {
+            return DFS(node.right, low, high);
+        }
+        if(node.val > high) {
+            return DFS(node.left, low, high);
+        }
+        node.left = DFS(node.left, low, high);
+        node.right = DFS(node.right, low, high);
+        return node;
+    }
+    return DFS(root, low, high);
+};
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 将有序数组转换为二叉搜索树: Leetcode_108
 
+Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
 
-#### Method1: DFS递归
+**Key Points**
+
+分割点就是数组中间位置的节点,分割点左边为左树，右边为右树；
+
 
 ```
-
+var sortedArrayToBST = function(nums) {
+    const DFS = function(nums, left, right) {
+        if(left > right) return null;
+        let mid = Math.floor((left + right) / 2);
+        const root = new TreeNode(nums[mid]);
+        root.left = DFS(nums, left, mid - 1);
+        root.right = DFS(nums, mid + 1, right);
+        return root;
+    }
+    return DFS(nums, 0, nums.length - 1);
+};
 ```
 
-#### Method2: DFS迭代
+
+#### 🔹Question 把二叉搜索树转换为累加树: Leetcode_538
+
+Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.
+
+As a reminder, a binary search tree is a tree that satisfies these constraints:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+**Key Points**
+
+反中序遍历得到降序数组，实现累加比当前大的数
+
 
 ```
+var convertBST = function(root) {
+    let pre = 0;
+    const DFS = function(node) {
+        if(!node) return null;
+        DFS(node.right);
+        node.val += pre;
+        pre = node.val;
+        DFS(node.left);
+        return node;
+    }
 
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-#### Method1: DFS递归
-
-```
-
-```
-
-#### Method2: DFS迭代
-
-```
-
+    return DFS(root);
+};
 ```
 
 
