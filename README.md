@@ -1,4 +1,57 @@
-代码随想录算法训练营第二十一天
+代码随想录算法训练营第二十二天
+
+# 回溯算法
+
+void backtracking(参数) {
+    if (终止条件) {
+        存放结果;
+        return;
+    }
+
+    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {
+        处理节点;
+        backtracking(路径，选择列表); // 递归
+        回溯，撤销处理结果
+    }
+}
+
+## 组合（combination）
+
+### Related Questions
+
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+#### 🔹Question 组合: Leetcode_77
+
+```
+
+```
+
+---
 
 # Binary Tree
 
