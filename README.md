@@ -46,11 +46,35 @@ var combine = function(n, k) {
 };
 ```
 
-#### 🔹Question 组合: Leetcode_77
+#### 🔹Question 组合总和III: Leetcode_216
+
+Find all valid combinations of k numbers that sum up to n such that the following conditions are true:
+
+Only numbers 1 through 9 are used.
+Each number is used at most once.
+Return a list of all possible valid combinations. The list must not contain the same combination twice, and the combinations may be returned in any order.
 
 ```
-
+var combinationSum3 = function(k, n) {
+    let res = [], path = [], sum = 0;
+    const backtracking = function(k, n, startIndex) {
+        if(path.length == k && sum == n){
+            res.push(path.slice());
+            return;
+        }
+        for(let i = startIndex; i <= 9; i++) {
+            sum += i;
+            path.push(i);
+            backtracking(k, n, i + 1);
+            sum -= i;
+            path.pop();
+        }
+    }
+    backtracking(k, n, 1);
+    return res;
+};
 ```
+
 #### 🔹Question 组合: Leetcode_77
 
 ```
