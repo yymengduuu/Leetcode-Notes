@@ -2,6 +2,7 @@
 
 # 回溯算法
 
+```
 void backtracking(参数) {
     if (终止条件) {
         存放结果;
@@ -14,6 +15,7 @@ void backtracking(参数) {
         回溯，撤销处理结果
     }
 }
+```
 
 ## 组合（combination）
 
@@ -21,8 +23,27 @@ void backtracking(参数) {
 
 #### 🔹Question 组合: Leetcode_77
 
-```
+Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n].
 
+You may return the answer in any order.
+
+```
+var combine = function(n, k) {
+    let res = [], path = [];
+    const backtracking = function(n, k, startIndex) {
+        if(path.length == k) {
+            res.push(path.slice());
+            return;
+        }
+        for(let i = startIndex; i <= n; i++ ) {
+            path.push(i);
+            backtracking(n, k, i + 1);
+            path.pop();
+        }
+    }
+    backtracking(n, k, 1);
+    return res;
+};
 ```
 
 #### 🔹Question 组合: Leetcode_77
