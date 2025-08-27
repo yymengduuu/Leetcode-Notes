@@ -75,11 +75,48 @@ var combinationSum3 = function(k, n) {
 };
 ```
 
-#### 🔹Question 组合: Leetcode_77
+#### 🔹Question 电话号码的字母组合: Leetcode_17
+
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
 ```
+var letterCombinations = function(digits) {
+    if(!digits || digits.length === 0) return [];
+    const phoneMap = [
+        '',
+        '',
+        'abc',
+        'def',
+        'ghi',
+        'jkl',
+        'mno',
+        'pqrs',
+        'tuv',
+        'wxyz',
+    ]
+    // 哈希问题，但是这道题用数组比哈希表简单，因为数组的index可以直接用来替代电话键1-9
 
+    let res = [];
+    const backtracking = function(d, startIndex, path) {
+        if(path.length === d.length) {
+            res.push(path);
+            return;
+        }
+        
+        let letter = phoneMap[d[startIndex]];
+        if(!letter) return;
+
+        for (let i of letter) {
+            backtracking(d, startIndex + 1, path + i);
+        }
+    }
+    backtracking(digits, 0, '');
+    return res;
+};
 ```
+
 #### 🔹Question 组合: Leetcode_77
 
 ```
