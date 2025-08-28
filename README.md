@@ -19,6 +19,11 @@ void backtracking(参数) {
 
 ## 组合（combination）
 
+对于组合问题，
+
+- 如果是一个集合来求组合的话，就需要startIndex
+- 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex
+
 ### Related Questions
 
 #### 🔹Question 组合: Leetcode_77
@@ -117,20 +122,121 @@ var letterCombinations = function(digits) {
 };
 ```
 
-#### 🔹Question 组合: Leetcode_77
+#### 🔹Question 组合总和: Leetcode_39
+
+Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+
+The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+**Key Points**
+
+类似于前面的77， 唯一不同在于这次可以反复利用数组中的数字，所以回溯时不需i + 1；
 
 ```
+var combinationSum = function(candidates, target) {
+    let res = [], path = [], sum = 0;
+    const backtracking = function(nums, target, startIndex) {
+        if(sum == target) {
+            res.push(path.slice());
+            return;
+        }
+        if(sum > target) return;
+        for(let i = startIndex; i < nums.length; i++) {
+            sum += nums[i];
+            path.push(nums[i]);
+            backtracking(nums, target, i);
+            sum -= nums[i];
+            path.pop();
+        }
+    }
+    backtracking(candidates, target, 0);
+    return res;
+};
+```
+
+#### 🔹Question 组合总和II: Leetcode_40
+
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note: The solution set must not contain duplicate combinations.
+
+**Key Points**
+
+类似于前面的39， 唯一不同在于同一树层上的“使用过”的数组需要去重，所以需要对数组排序并给出控制条件；
 
 ```
-#### 🔹Question 组合: Leetcode_77
-
+var combinationSum2 = function(candidates, target) {
+    let res = [], path = [], sum = 0;
+    let arr = candidates.sort((a,b) => a - b);
+    const backtracking = function(arr, target, startIndex) {
+        if(sum == target) {
+            res.push(path.slice());
+            return;
+        }
+        if(sum > target) return;
+        for(let i = startIndex; i < arr.length; i++) {
+            if (i > startIndex && arr[i] === arr[i-1]) continue;
+            sum += arr[i];
+            path.push(arr[i]);
+            backtracking(arr, target, i + 1);
+            sum -= arr[i];
+            path.pop();
+        }
+    }
+    backtracking(candidates, target, 0);
+    return res;
+};
 ```
 
-```
-#### 🔹Question 组合: Leetcode_77
+#### 🔹Question 分割回文串: Leetcode_131
+
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+**Key Points**
+
+总体回溯思路一致，难点在于：
+
+- 回溯中返回的标准是判断回文，因此需要一个单独的函数检查是否回文；
+- 回溯的终止条件是startIndex >= s.length，因为切割最多就是切出s长度，不可能比这个还多；
 
 ```
+var partition = function(s) {
+    let res = [], path = [];
 
+    const backtracking = function(s, startIndex) {
+        if(startIndex >= s.length){
+            res.push(path.slice());
+            return;
+        }
+        for(let i = startIndex; i < s.length; i++) {
+            if(isPalindrome(s, startIndex, i)){
+                let strings = s.slice(startIndex, i + 1);
+                // slice 的右端不含当前位，想要包含 i，应写 i + 1
+                path.push(strings);
+            } else {
+                continue;
+            }
+            backtracking(s, i + 1);
+            path.pop();
+        }
+    }
+
+    const isPalindrome = function(s, left, right) {
+        while(left < right) {
+            if(s[left] !== s[right]) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    backtracking(s, 0);
+    return res;
+};
 ```
 
 ---
