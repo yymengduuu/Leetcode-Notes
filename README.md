@@ -192,6 +192,12 @@ var combinationSum2 = function(candidates, target) {
 };
 ```
 
+---
+
+## 分割（partitioning）
+
+### Related Questions
+
 #### 🔹Question 分割回文串: Leetcode_131
 
 Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
@@ -289,6 +295,12 @@ var restoreIpAddresses = function(s) {
 };
 ```
 
+---
+
+## 子集（subsets）
+
+### Related Questions
+
 #### 🔹Question 子集: Leetcode_78
 
 Given an integer array nums of unique elements, return all possible subsets (the power set).
@@ -346,20 +358,14 @@ var subsetsWithDup = function(nums) {
     return res;
 };
 ```
+---
+
+## 排列（subsets）
+
+### Related Questions
 
 
-#### 🔹Question : Leetcode_
-
-
-
-**Key Points**
-
-```
-
-```
-
-
-#### 🔹Question : Leetcode_
+#### 🔹Question : Leetcode_46
 
 
 
@@ -370,7 +376,7 @@ var subsetsWithDup = function(nums) {
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question : Leetcode_47
 
 
 
@@ -379,6 +385,24 @@ var subsetsWithDup = function(nums) {
 ```
 
 ```
+
+---
+
+## 其他
+
+### Related Questions
+
+#### 🔹Question 递增子序列: Leetcode_491
+
+
+
+**Key Points**
+
+```
+
+```
+
+---
 
 
 #### 🔹Question : Leetcode_
