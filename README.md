@@ -325,8 +325,26 @@ The solution set must not contain duplicate subsets. Return the solution in any 
 
 **Key Points**
 
-```
+- 这道题目和78.子集 区别就是集合里有重复元素了，而且求取的子集要去重
+- 去重想nums[i - 1] === s[i] 的情况
 
+
+```
+var subsetsWithDup = function(nums) {
+    let res = [], path = [];
+    let s = nums.sort((a,b) => a - b);
+    const backtracking = function(s, startIndex) {
+        res.push([...path]);
+        for(let i = startIndex; i < s.length; i++) {
+        if(s[i - 1] === s[i] && i > startIndex) continue;
+        path.push(s[i]);
+        backtracking(s, i + 1);
+        path.pop();      
+        }
+    }
+    backtracking(s, 0);
+    return res;
+};
 ```
 
 
