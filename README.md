@@ -297,8 +297,23 @@ The solution set must not contain duplicate subsets. Return the solution in any 
 
 **Key Points**
 
-```
+无序，取过的元素不会重复取，写回溯算法的时候，for就要从startIndex开始，而不是从0开始！
 
+```
+var subsets = function(nums) {
+    let res = [], path = [];
+    const backtracking = function(s, startIndex){
+        res.push([...path]);
+        for(let i = startIndex; i < s.length; i++) {
+            path.push(s[i]);
+            backtracking(s, i + 1);
+            path.pop();
+        }
+        
+    }
+    backtracking(nums, 0);
+    return res;
+};
 ```
 
 
