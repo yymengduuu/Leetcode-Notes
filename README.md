@@ -319,7 +319,9 @@ var subsets = function(nums) {
 
 #### 🔹Question 子集II: Leetcode_90
 
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
 
+The solution set must not contain duplicate subsets. Return the solution in any order.
 
 **Key Points**
 
