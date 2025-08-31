@@ -367,7 +367,7 @@ var subsetsWithDup = function(nums) {
 
 ### Related Questions
 
-#### 🔹Question : Leetcode_46
+#### 🔹Question 全排列: Leetcode_46
 
 Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
 
@@ -398,14 +398,40 @@ var permute = function(nums) {
 ```
 
 
-#### 🔹Question : Leetcode_47
+#### 🔹Question 全排列 II: Leetcode_47
 
-
+Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
 
 **Key Points**
 
-```
+和46.全排列 (opens new window)的区别在与给定一个可包含重复数字的序列，要返回所有不重复的全排列。
 
+```
+var permuteUnique = function(nums) {
+    let res = [], path = [];
+    let s = nums.sort((a,b) => a - b);
+    const backtracking = function(s, l, used) {
+        if(path.length === l) {
+            res.push(path.slice());
+            return;
+        }
+        for(let i = 0; i < l; i++) {
+            
+            // 同一层，不允许从一组相等数字里重复“开头”；但如果前一个相同值在更高层已经被选用（used[i-1]===true），那当前这个相同值可以在下一层继续用。
+            if(i > 0 && s[i] === s [i - 1] && !used[i - 1]) continue;
+            // 这个元素在这一条递归分支里已经被选过了，之后不能再选
+            if(used[i]) continue;
+            used[i] = true;
+            path.push(s[i]);
+            backtracking(s, l, used);
+            path.pop();
+            // 回溯到上一层后，再把 used[i]恢复，以便后续其他分支还可以使用这个数字
+            used[i] = false;
+        }
+    }
+    backtracking(s, s.length, []);
+    return res;
+};
 ```
 
 ---
