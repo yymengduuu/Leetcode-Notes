@@ -360,19 +360,41 @@ var subsetsWithDup = function(nums) {
 ```
 ---
 
-## 排列（subsets）
+## 排列（permutations）
+
+- 每层都是从0开始搜索而不是startIndex
+- 需要used数组记录path里都放了哪些元素了
 
 ### Related Questions
 
-
 #### 🔹Question : Leetcode_46
 
-
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
 
 **Key Points**
 
 ```
-
+var permute = function(nums) {
+    const res = [], path = [];
+    const backtracking = function(nums, l, used) {
+        if(path.length === l) {
+            res.push(path.slice());
+            return;
+        }
+        for(let i = 0; i < l; i++) {
+            if(used[i]) continue;
+            // 这个元素在这一条递归分支里已经被选过了，之后不能再选
+            used[i] = true;
+            path.push(nums[i]);
+            backtracking(nums, l, used);
+            path.pop();
+            // 回溯到上一层后，再把 used[i]恢复，以便后续其他分支还可以使用这个数字
+            used[i] = false;
+        }
+    }
+    backtracking(nums, nums.length, []);
+    return res;
+};
 ```
 
 
