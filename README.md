@@ -388,18 +388,49 @@ var subsetsWithDup = function(nums) {
 
 ---
 
-## 其他
+## 子序列 (subsequence)
 
 ### Related Questions
 
 #### 🔹Question 递增子序列: Leetcode_491
 
-
+Given an integer array nums, return all the different possible non-decreasing subsequences of the given array with at least two elements. You may return the answer in any order.
 
 **Key Points**
 
-```
+需要和90子集进行重点区分，区别在于
 
+- 子集不讲顺序只关心元素是否被选到
+- 子序列元素的顺序必须和原序列元素顺序相同，例如原数组：nums = [4, 6, 7, 7, 3]，子序列不能出现 [3, 4, 6, 7, 7, ]
+
+```
+var findSubsequences = function(nums) {
+    let res = [], path = [];
+
+    const backtracking = function(nums, startIndex) {
+        // 子序列至少由两个数字组成
+        if(path.length > 1) {
+            res.push(path.slice());
+        }
+
+        const used = new Set();
+        // 这一层用过的值
+
+        for(let i = startIndex; i < nums.length; i++){
+            // 保证递增，不用nums[i] === nums[i - 1] 因为只在数组已经排序时才成立
+            if(path.length > 0 && nums[i] < path[path.length-1]) continue;
+            // 本层已经用过这个值，跳过
+            if (used.has(nums[i])) continue;
+
+            used.add(nums[i]);
+            path.push(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop();
+        }
+    }
+    backtracking(nums, 0);
+    return res;
+};
 ```
 
 ---
