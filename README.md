@@ -249,7 +249,44 @@ Given a string s containing only digits, return all possible valid IP addresses 
 **Key Points**
 
 ```
+var restoreIpAddresses = function(s) {
+    let res = [], path = [];
+    const backtracking = function(s, startIndex) {
+        // condition 1: 分割为四段
+        if(path.length === 4){
+            // condition 2：必须刚好用完所有字符
+            if(startIndex === s.length) {
+            res.push(path.join('.'));
+            return;
+            }
+        }
+        for(let i = startIndex; i < s.length; i++ ) {
+            if (!isValid(s, startIndex, i)) break;
+            let string = s.slice(startIndex, i + 1);
+            path.push(string);
+            backtracking(s, i + 1);
+            path.pop();
+        }
+    }
 
+    // Condition 2: 
+    const isValid = function(s, start, end){
+        // 起点大于终点，说明区间无效
+        if(start > end) return false;
+
+        // 段位以0为开头的数字不合法
+        if(s[start] == '0' && start !== end) return false;
+
+        // 段位如果大于255,有非正整数字符不合法
+        let num = Number(s.slice(start, end + 1));
+        if(isNaN(num) || num > 255) return false;
+
+        return true;
+    }
+
+    backtracking(s, 0);
+    return res;
+};
 ```
 
 #### 🔹Question 子集: Leetcode_78
