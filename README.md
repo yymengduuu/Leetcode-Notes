@@ -120,12 +120,26 @@ var maxProfit = function(prices) {
 
 #### 🔹Question 跳跃游戏: Leetcode_55
 
+给定一个非负整数数组，你最初位于数组的第一个位置。
 
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+判断你是否能够到达最后一个位置。
 
 **Key Points**
 
-```
+看似核心条件是s[i] + i >= nums[i]，但是这是一次性达到的条件，可以分两步或多步到达，因此核心转变为判断什么情况下到不了，因此if (i > maxReach) return false;
 
+```
+var canJump = function(nums) {
+    let maxReach = 0;
+    for(let i = 0; i < nums.length; i++) {
+        if(i > maxReach) return false;
+        maxReach = Math.max(nums[i] + i, maxReach);
+        if(maxReach >= nums.length - 1) return true;
+    }
+    return true;
+};
 ```
 
 
