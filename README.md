@@ -143,14 +143,33 @@ var canJump = function(nums) {
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 跳跃游戏 II: Leetcode_45
 
+给定一个非负整数数组，你最初位于数组的第一个位置。
 
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+你的目标是使用最少的跳跃次数到达数组的最后一个位置。
 
 **Key Points**
 
-```
+从覆盖范围出发，不管怎么跳，覆盖范围内一定是可以跳到的，以最小的步数增加覆盖范围，覆盖范围一旦覆盖了终点，得到的就是最少步数！
 
+```
+var jump = function(nums) {
+    let curIndex = 0, nextIndex = 0, steps = 0;
+    for(let i = 0; i < nums.length - 1; i++){
+        // 遍历数组时，随时更新 “能到达的最远位置”
+        nextIndex = Math.max(nums[i] + i, nextIndex);
+        // 当你走到当前区间的边界时，说明必须再跳一次
+        if(i == curIndex) {
+            // 把 curIndex 更新为 nextIndex，相当于扩展了新的覆盖区间
+            curIndex = nextIndex;
+            steps++;
+        }
+    }
+    return steps;
+};
 ```
 
 
