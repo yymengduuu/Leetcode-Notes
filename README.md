@@ -249,14 +249,40 @@ var canCompleteCircuit = function(gas, cost) {
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 分发糖果: Leetcode_135
 
+老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
 
+你需要按照以下要求，帮助老师给这些孩子分发糖果：
+
+每个孩子至少分配到 1 个糖果。
+相邻的孩子中，评分高的孩子必须获得更多的糖果。
+那么这样下来，老师至少需要准备多少颗糖果呢？
 
 **Key Points**
 
-```
+- 需要两次遍历，从左到右和从右到左都扫描一次才能确保相邻两孩子的比较完整；
+- 需要用数组记录给不同孩子分了多少糖，直接用res++无法处理一个孩子分了两颗糖以上的情况；
+- 左孩子大于右孩子的情况一定要从后向前遍历；
 
+```
+var candy = function(ratings) {
+    let res = new Array(ratings.length).fill(1);
+    for(let i = 0; i < ratings.length; i++) {
+        if(i > 0 && ratings[i] > ratings[i - 1]){
+            // 当前孩子的评分比左边高，他就必须比左边的糖果数多 1
+            res[i] = res[i - 1] + 1;
+        }
+    }
+
+    for(let i = ratings.length - 2; i >= 0; i--) {
+        if(ratings[i] > ratings[i + 1]){
+            // 兼顾第一次扫描的结果，他也必须比右边的糖果数多 1，因此用max
+            res[i] = Math.max(res[i], res[i + 1] + 1);
+        }
+    }
+    return res.reduce((a,b) => a + b);
+};
 ```
 
 
