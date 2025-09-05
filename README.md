@@ -113,14 +113,31 @@ var partitionLabels = function(s) {
 };
 ```
 
-#### 🔹Question 重叠区间之: Leetcode_
+#### 🔹Question 重叠区间之 合并区间: Leetcode_56
 
-
+给出一个区间的集合，请合并所有重叠的区间。
 
 **Key Points**
 
-```
+类似于合并区间56；
 
+```
+var merge = function(intervals) {
+    let res = [];
+    intervals.sort((a,b) => a[0] - b[0]);
+    let pre = intervals[0];
+    for(let i = 1; i < intervals.length; i++) {
+        let cur = intervals[i];
+        if(cur[0] > pre[1]){
+            res.push(pre);
+            pre = cur;
+        } else {
+            pre[1] = Math.max(pre[1], cur[1]);
+        }
+    }
+    res.push(pre);
+    return res;
+};
 ```
 
 
