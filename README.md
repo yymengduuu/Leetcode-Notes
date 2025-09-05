@@ -490,14 +490,38 @@ var reconstructQueue = function(people) {
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 单调递增的数字: Leetcode_738
 
+给定一个非负整数 N，找出小于或等于 N 的最大的整数，同时这个整数需要满足其各个位数上的数字是单调递增。
 
+（当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。）
 
 **Key Points**
 
-```
+- 从后向前遍历，利用上次得出的结果比较
+- 不符合要求的位置进行标记，重新遍历转为9
 
+
+```
+var monotoneIncreasingDigits = function(n) {
+    // 将数字转为字符分开再转回数字
+    // 字符转数字：一元运算符 +
+    n = n.toString().split('').map(n => +n);
+    let flag = Infinity;
+
+    for(let i = n.length - 1; i > 0; i--) {
+        if(n[i - 1] > n[i]) {
+            flag = i;
+            n[i - 1] = n[i - 1] - 1;
+            n[i] = 9;
+        }
+    }
+    for(let i = flag; i < n.length; i++) {
+        n[i] = 9;
+    }
+    
+    return +n.join('');
+};
 ```
 
 
