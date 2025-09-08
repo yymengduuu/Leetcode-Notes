@@ -1,4 +1,103 @@
-代码随想录算法训练营第三十一天
+代码随想录算法训练营第三十四天
+
+# 动态规划
+
+### Related Questions
+
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+#### 🔹Question : Leetcode_
+
+
+
+**Key Points**
+
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+---
 
 # 贪心算法
 
@@ -7,7 +106,6 @@
 - 求解每一个子问题的最优解
 - 将局部最优解堆叠成全局最优解
 
-## 
 
 ### Related Questions
 
@@ -524,46 +622,7 @@ var monotoneIncreasingDigits = function(n) {
 };
 ```
 
-
-#### 🔹Question : Leetcode_
-
-
-
-**Key Points**
-
-```
-
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-
-**Key Points**
-
-```
-
-```
-
-
-#### 🔹Question : Leetcode_
-
-
-
-**Key Points**
-
-```
-
-```
-
-
-
-
-
-
-
-
+---
 
 
 # 回溯算法
