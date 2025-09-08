@@ -80,16 +80,47 @@ var minCostClimbingStairs = function(cost) {
 };
 ```
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 不同路径: Leetcode_62
+
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+
+问总共有多少条不同的路径？
 
 
 **Key Points**
 
-```
+- 确定dp数组（dp table）： dp[i][j] 表示从（0 ，0）出发，到(i, j) 有dp[i][j]条不同的路径。
+- 确定递推公式：dp[i][j]= dp[i - 1][j] + dp[i][j - 1]；
+- dp数组的初始化： dp[i][0]一定都是1，因为从(0, 0)的位置到(i, 0)的路径只有一条，那么dp[0][j]也同理。
 
 ```
+var uniquePaths = function(m, n) {
+    // 创建二维数组
+    let dp = new Array(m).fill().map(item => Array(n));
+    
+    // 二维数组需要分别赋值
+    for(let i = 0; i < m; i++) {
+        dp[i,0] = 1;
+    }
+    for(let j = 0; j < n; j++) {
+        dp[0,j] = 1;
+    }
 
-#### 🔹Question : Leetcode_
+    // 数组历遍从1开始，因为0设置的值
+    for(let i = 1; i < m; i++) {
+        for(let j = 1; j < n; j++) {
+            dp[i,j] = dp[i - 1, j] + dp[i, j - 1];
+            }
+    }
+
+    // mn代表的是有一个 m × n 的网格，第一行是index0不是1，所以最大的合法下标是 dp[m-1][n-1]
+    return dp[m - 1,n - 1];
+};
+```
+
+#### 🔹Question 不同路径 II: Leetcode_
 
 
 
