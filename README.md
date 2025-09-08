@@ -37,14 +37,25 @@ var fib = function(n) {
 ```
 
 
-#### 🔹Question : Leetcode_
+#### 🔹Question 爬楼梯: Leetcode_70
 
+假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
 
+每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
 
 **Key Points**
 
-```
+推导的过程类似于斐波那契数，只是初始的设置不一样了
 
+```
+var climbStairs = function(n) {
+    // 爬到第0层，也有一种方法
+    let dp = [1,2];
+    for(let i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n - 1];
+};
 ```
 
 
