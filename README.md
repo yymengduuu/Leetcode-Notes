@@ -4655,6 +4655,12 @@ var mySqrt = function(x) {
 
 # Two Pointers
 
+**使用场景**
+
+- 数组有序，要求找两个数满足某个和/差/乘积等关系；
+- 对原数组进行就地修改，比如删除重复元素、移动非零数等；
+- 从字符串/数组两头向中间看，判断是否对称，或逐步处理两端。
+
 **Key Points:**
 - Use two pointers: `fast` scans the array, `slow` marks the position to overwrite.
 - Loop condition: `fast < nums.length`
