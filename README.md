@@ -2859,6 +2859,40 @@ var topKFrequent = function (nums, k) {
 
 ---
 
+#### 🔹Question 6: Leetcode_844
+
+Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+
+Note that after backspacing an empty text, the text will continue empty.
+
+
+
+```
+var backspaceCompare = function(s, t) {
+    let stackS = [], stackT = [];
+    for(let i = 0; i < s.length; i++){
+        if(s[i] !== "#"){
+            stackS.push(s[i]);
+        } else {
+            stackS.pop();
+        }
+    }
+
+    for(let i = 0; i < t.length; i++){
+        if(t[i] !== "#"){
+            stackT.push(t[i]);
+        } else {
+            stackT.pop();
+        }
+    }
+
+    return stackS.join("") === stackT.join("");
+};
+```
+
+---
+
+
 ## Implement Quene & Stack
 
 ### Related Questions
