@@ -4495,6 +4495,15 @@ var maxSatisfied = function(customers, grumpy, minutes) {
 
 ## Binary Search
 
+**标志性用法**
+
+	•	有序数组查找
+	•	最小可行值
+	•	最大可行值
+	•	猜答案 + 判定函数
+	•	明显单调性
+
+
 **Key Points:**
 - Use when the array (or value space) is sorted or monotonic(increasing or decreasing);
 - Maintain two pointers: left and right;
