@@ -4493,6 +4493,44 @@ var maxSatisfied = function(customers, grumpy, minutes) {
 
 ---
 
+
+#### 🔹Question 5: Leetcode_3
+
+Given a string s, find the length of the longest substring without duplicate characters.
+
+ 
+
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+```
+var lengthOfLongestSubstring = function(s) {
+    let map = new Map();
+    let left = 0, res = 0;
+    for(let right = 0; right < s.length; right++){
+        let cur = s[right];
+        map.set(cur, map.has(cur) ? map.get(cur) + 1 : 1 )
+        while(map.get(cur) > 1){
+            map.set(s[left], map.get(s[left]) - 1);
+            left++;
+        }
+        res = Math.max(res, right - left + 1);
+    }
+    return res;
+};
+```
+
+---
+
+
 ## Binary Search
 
 **标志性用法**
