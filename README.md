@@ -4270,10 +4270,8 @@ Given an m x n matrix, return all elements of the matrix in spiral order.
 var spiralOrder = function(matrix) {
     let startX = 0;
     let startY = 0;
-    let endX = m - 1;
-    let endY = n - 1;
-    let m = matrix.length;
-    let n = matrix[0].length;
+    let endX = matrix.length - 1;
+    let endY = matrix[0].length - 1;
     let ans = [];
 
     while (startX <= endX && startY <= endY){
