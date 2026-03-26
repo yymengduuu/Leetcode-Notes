@@ -3773,7 +3773,7 @@ B: 4 -> 6 -> 7 -> 8
 
 ### Related Questions
 
-#### 🔹Question 1: Leetcode_19
+#### 🔹Question: Leetcode_160
 
 Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
 e.g.
@@ -3822,6 +3822,32 @@ var getIntersectionNode = function(headA, headB) {
 
 ## Swap Nodes in Linked List
 
+**考虑加 dummy head 的时候，通常是你发现：**
+
+头节点 head 可能会被删除、替换、插入到前面，或者特殊处理很麻烦
+
+这时就很适合加。
+
+问题 1
+
+会不会删掉 head？
+
+如果会，考虑 dummy。
+
+问题 2
+
+结果链表的头节点是不是不确定？
+
+如果是，考虑 dummy。
+
+问题 3
+
+我是不是总想操作某个节点的前一个节点？
+
+如果是，考虑 dummy。
+
+---
+
 **Key Points**
 ![IMG_0517](https://github.com/user-attachments/assets/d3fd738a-ddce-4b2a-b911-36d94b9aec1e)
 
@@ -3854,7 +3880,6 @@ var removeNthFromEnd = function(head, n) {
 
 ---
 
-## Swap Nodes in Linked List
 
 **Key Points**
 ![IMG_0516](https://github.com/user-attachments/assets/93c44e76-c273-4737-9d52-6cb3b45e9cd4)
@@ -3865,7 +3890,7 @@ var removeNthFromEnd = function(head, n) {
 
 ### Related Questions
 
-#### 🔹Question 1: Leetcode_24
+#### 🔹Question 2: Leetcode_24
 
 Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
 
