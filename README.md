@@ -3707,13 +3707,6 @@ function ListNode(val, next = null) {
 
 ---
 
-## Interaction of Arrays
-
-### Related Questions
-
-#### 🔹Question 1: Leetcode_349
-
----
 
 ## Linked Lists Cycle
 
@@ -3737,21 +3730,26 @@ Do not modify the linked list.
 
 ```
 var detectCycle = function(head) {
-    if(!head || !head.next) return null;
+    if (!head || !head.next) return null;
 
-    let fast = head.next.next, slow = head.next;
-    while (fast && fast.next && fast !== slow) {
+    let slow = head;
+    let fast = head;
+
+    while (fast && fast.next) {
+        slow = slow.next;
         fast = fast.next.next;
-        slow = slow.next;
-    }
-    if(!fast || !fast.next) return null;
 
-    slow = head;
-    while(fast !== slow){
-        fast = fast.next;
-        slow = slow.next;
+        if (slow === fast) {
+            slow = head;
+            while (slow !== fast) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return slow;
+        }
     }
-    return slow;
+
+    return null;
 };
 ```
 
